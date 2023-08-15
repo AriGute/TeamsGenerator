@@ -1,11 +1,30 @@
-import ReactDOM from 'react-dom';
-import Header from './components/Header';
 import React from 'react';
-
-const root = ReactDOM.createRoot(document.querySelector('root'));
+import ReactDOM from 'react-dom/client';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import TeamGenerator from './components/TeamGenerator';
+import About from './components/About';
+import Header from './components/Header';
 
 const App = () => {
-	return <div>{<Header />}</div>;
+	return (
+		<div className=' w-screen h-screen bg-blue-100 absolute top-0'>
+			<Header></Header>
+			<TeamGenerator></TeamGenerator>
+		</div>
+	);
 };
 
-root.render(App);
+const router = createBrowserRouter([
+	{
+		path: '/',
+		element: <App />,
+	},
+	{
+		path: '/about',
+		element: <About />,
+	},
+]);
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+
+root.render(<RouterProvider router={router} />);
