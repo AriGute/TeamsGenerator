@@ -1,0 +1,11 @@
+{
+  "name": "teamsgenerator",
+  "version": "1.0.0",
+  "description": "Generate Teams from list of names",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ariel Gueta",
+  "license": "ISC"
+}
