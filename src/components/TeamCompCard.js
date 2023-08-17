@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PlayerCard from './PlayerCard';
 
 const TeamCompCard = ({ list, name, removeFunc }) => {

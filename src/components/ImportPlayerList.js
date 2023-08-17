@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { getStoredPlayersList } from '../services/generateTeams';
 
-const ImportPlayerList = ({ props }) => {
+const ImportPlayerList = ({ callback }) => {
 	const [playerList, setPlayerList] = useState('');
-	const { callback } = props || {
-		callback: function () {
-			console.log('no callback function was given');
-			return [];
-		},
-	};
+
+	function addPlayerButton() {
+		const list = playerList
+			.split('\n')
+			.filter((p) => p != '')
+			.map((p) => p.trim());
+		callback(list);
+	}
 
 	useEffect(() => {
 		const playersList = getStoredPlayersList();
-		setPlayerList(players);
+		setPlayerList(playerList);
 	}, []);
 
 	return (
@@ -28,14 +30,8 @@ const ImportPlayerList = ({ props }) => {
 					value={playerList.toString().replaceAll(',', '\n')}
 					onChange={(e) => setPlayerList(e.target.value)}></textarea>
 				<button
-					className=' bg-gray-300 h-10 p-2 m-2 rounded w-[150px] hover:bg-gray-400'
-					onClick={() => {
-						const list = playerList
-							.split('\n')
-							.filter((p) => p != '')
-							.map((p) => p.trim());
-						callback(list);
-					}}>
+					className={`bg-gray-300 h-10 p-2 m-2 rounded w-[150px] hover:bg-gray-400`}
+					onClick={addPlayerButton}>
 					Add Players
 				</button>
 			</div>
