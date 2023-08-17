@@ -1,4 +1,4 @@
-import { getStoredPlayersList, setStoredPlayersList } from '../services/generateTeams';
+import { getStoredPlayersList, setStoredPlayersList } from './services/generateTeams';
 import React, { useState } from 'react';
 import ImportPlayerList from './ImportPlayerList';
 import TeamCompCard from './common/TeamCompCard';
@@ -11,17 +11,17 @@ const TeamGenerator = () => {
 		setPlayerList(playerList.filter((p) => p != player));
 	};
 
-	useState(() => {
-		const playersList = getStoredPlayersList();
-		setPlayerList(playersList);
-	}, []);
-
 	function importPlayerList(importPlayers) {
 		const playersSet = new Set([...playerList, ...importPlayers]);
 		const players = [...playersSet];
 		setStoredPlayersList(players);
 		setPlayerList(players);
 	}
+
+	useState(() => {
+		const playersList = getStoredPlayersList();
+		setPlayerList(playersList);
+	}, []);
 
 	window.addEventListener('clear', () => setPlayerList([]));
 

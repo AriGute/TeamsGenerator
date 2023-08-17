@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getStoredPlayersList } from '../services/generateTeams';
+import { getStoredPlayersList } from './services/generateTeams';
 
 const ImportPlayerList = ({ callback }) => {
 	const [playerList, setPlayerList] = useState('');
@@ -16,6 +16,7 @@ const ImportPlayerList = ({ callback }) => {
 		const playersList = getStoredPlayersList();
 		setPlayerList(playerList);
 	}, []);
+	window.addEventListener('clear', () => setPlayerList([]));
 
 	return (
 		<div className=' text-center'>

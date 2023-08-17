@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import TeamCompCard from './common/TeamCompCard';
-import { pickTeams, setStoredPlayersList } from '../services/generateTeams';
+import { pickTeams, setStoredPlayersList } from './services/generateTeams';
 
 const TeamsDisplay = ({ playerList }) => {
 	const [teamA, setTeamA] = useState([]);
