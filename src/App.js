@@ -8,7 +8,7 @@ import Header from './components/Header';
 const App = () => {
 	return (
 		<div className=' w-screen h-screen bg-blue-100 absolute top-0'>
-			<Header />
+      <Header />
 			<TeamGenerator />
 		</div>
 	);
