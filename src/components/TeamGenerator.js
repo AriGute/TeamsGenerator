@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { pickTeams } from '../services/generateTeams';
+import { pickTeams, getStoredPlayersList, setStoredPlayersList } from '../services/generateTeams';
 import ImportPlayerList from './ImportPlayerList';
 import TeamCompCard from './TeamCompCard';
 
@@ -11,6 +11,11 @@ const TeamGenerator = () => {
 		setPlayerList(playerList.filter((p) => p != player));
 	};
 
+	useState(() => {
+		const playersList = getStoredPlayersList();
+		setPlayerList(playersList);
+	}, []);
+
 	return (
 		<div className='flex flex-col items-center'>
 			<ImportPlayerList
@@ -20,7 +25,9 @@ const TeamGenerator = () => {
 						[...playerList, ...importPlayers].forEach((player) => {
 							set.add(player);
 						});
-						setPlayerList([...set]);
+						const spread = [...set];
+						setCachedPlayers(spread);
+						setPlayerList(spread);
 					},
 				}}></ImportPlayerList>
 			<TeamCompCard list={playerList} name={'Players'} removeFunc={removeAble}></TeamCompCard>
@@ -42,6 +49,7 @@ const TeamGenerator = () => {
 							setPlayerList([]);
 							setTeamA([]);
 							setTeamB([]);
+							setStoredPlayersList([]);
 						}}>
 						Clear
 					</button>

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { getStoredPlayersList } from '../services/generateTeams';
 
 const ImportPlayerList = ({ props }) => {
 	const [playerList, setPlayerList] = useState('');
@@ -8,6 +9,11 @@ const ImportPlayerList = ({ props }) => {
 			return [];
 		},
 	};
+
+	useEffect(() => {
+		const playersList = getStoredPlayersList();
+		setPlayerList(players);
+	}, []);
 
 	return (
 		<div className=' text-center'>
@@ -19,6 +25,7 @@ const ImportPlayerList = ({ props }) => {
 					id='playersToImport'
 					cols='30'
 					rows='5'
+					value={playerList.toString().replaceAll(',', '\n')}
 					onChange={(e) => setPlayerList(e.target.value)}></textarea>
 				<button
 					className=' bg-gray-300 h-10 p-2 m-2 rounded w-[150px] hover:bg-gray-400'

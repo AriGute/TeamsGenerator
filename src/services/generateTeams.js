@@ -11,3 +11,17 @@ export function pickTeams(list) {
 	}
 	return [teamA, teamB];
 }
+
+export function getStoredPlayersList() {
+	const list = localStorage.getItem('player_list');
+	console.log('get', list);
+	if (JSON.stringify(list).length > 2) {
+		return list.split(',');
+	}
+	return [];
+}
+export function setStoredPlayersList(players) {
+	console.log('set', players);
+
+	localStorage.setItem('player_list', players);
+}
