@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
+import Button from './common/Button';
 
-const ImportPlayerList = ({ props }) => {
+const ImportPlayerList = ({ callback }) => {
 	const [playerList, setPlayerList] = useState('');
-	const { callback } = props || {
-		callback: function () {
-			console.log('no callback function was given');
-			return [];
-		},
-	};
+
+	function addPlayerButton() {
+		const list = playerList
+			.split('\n')
+			.filter((p) => p != '')
+			.map((p) => p.trim());
+		callback(list);
+	}
 
 	return (
 		<div className=' text-center'>
@@ -20,17 +23,7 @@ const ImportPlayerList = ({ props }) => {
 					cols='30'
 					rows='5'
 					onChange={(e) => setPlayerList(e.target.value)}></textarea>
-				<button
-					className=' bg-gray-300 h-10 p-2 m-2 rounded w-[150px] hover:bg-gray-400'
-					onClick={() => {
-						const list = playerList
-							.split('\n')
-							.filter((p) => p != '')
-							.map((p) => p.trim());
-						callback(list);
-					}}>
-					Add Players
-				</button>
+				<Button text={'Add Players'} color={'gray'} callback={addPlayerButton}></Button>
 			</div>
 		</div>
 	);
