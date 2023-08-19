@@ -5,7 +5,7 @@ const ImportPlayerList = ({ callback }) => {
 	const [playerList, setPlayerList] = useState('');
 
 	function addPlayerButton() {
-		const list = playerList
+		let list = playerList
 			.split('\n')
 			.filter((p) => p != '')
 			.map((p) => p.trim());
