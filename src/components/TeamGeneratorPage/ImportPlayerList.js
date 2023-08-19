@@ -1,21 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { getStoredPlayersList } from './services/generateTeams';
 
 const ImportPlayerList = ({ callback }) => {
 	const [playerList, setPlayerList] = useState('');
 
 	function addPlayerButton() {
-		const list = playerList
+		let list = playerList
 			.split('\n')
 			.filter((p) => p != '')
 			.map((p) => p.trim());
 		callback(list);
 	}
 
-	useEffect(() => {
-		const playersList = getStoredPlayersList();
-		setPlayerList(playerList);
-	}, []);
 	window.addEventListener('clear', () => setPlayerList([]));
 
 	return (
