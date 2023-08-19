@@ -22,21 +22,19 @@ export default class TeamsHandler {
 	}
 
 	static addPlayerToPreTeam(player, team) {
+		TeamsHandler.#preTeamA.delete(player);
+		TeamsHandler.#preTeamB.delete(player);
+		TeamsHandler.#players.delete(player);
+
 		switch (team) {
 			case teams.A:
 				TeamsHandler.#preTeamA.add(player);
-				TeamsHandler.#preTeamB.delete(player);
-				TeamsHandler.#players.delete(player);
 				break;
 			case teams.B:
 				TeamsHandler.#preTeamB.add(player);
-				TeamsHandler.#preTeamA.delete(player);
-				TeamsHandler.#players.delete(player);
 				break;
 			case teams.publicGroup:
 				TeamsHandler.#players.add(player);
-				TeamsHandler.#preTeamA.delete(player);
-				TeamsHandler.#preTeamB.delete(player);
 				break;
 		}
 	}
