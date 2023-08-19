@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import Button from './common/Button';
+import React, { useState, useEffect } from 'react';
 
 const ImportPlayerList = ({ callback }) => {
 	const [playerList, setPlayerList] = useState('');
@@ -12,6 +11,8 @@ const ImportPlayerList = ({ callback }) => {
 		callback(list);
 	}
 
+	window.addEventListener('clear', () => setPlayerList([]));
+
 	return (
 		<div className=' text-center'>
 			<h1 className=' underline'>Import List</h1>
@@ -22,8 +23,13 @@ const ImportPlayerList = ({ callback }) => {
 					id='playersToImport'
 					cols='30'
 					rows='5'
+					value={playerList.toString().replaceAll(',', '\n')}
 					onChange={(e) => setPlayerList(e.target.value)}></textarea>
-				<Button text={'Add Players'} color={'gray'} callback={addPlayerButton}></Button>
+				<button
+					className={`bg-gray-300 h-10 p-2 m-2 rounded w-[150px] hover:bg-gray-400`}
+					onClick={addPlayerButton}>
+					Add Players
+				</button>
 			</div>
 		</div>
 	);

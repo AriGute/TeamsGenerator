@@ -1,16 +1,30 @@
-import { teams } from '../utils/consts';
+import { teams } from '../../../utils/consts';
 
 export default class TeamsHandler {
 	static #players = new Set([]);
 	static #preTeamA = new Set([]);
 	static #preTeamB = new Set([]);
 
-	static initTeamsHandler(players, preTeamA, preTeamB) {
+	static #initTeamsHandler(players, preTeamA, preTeamB) {
 		TeamsHandler.#players = players;
 		TeamsHandler.#preTeamA = preTeamA;
 		TeamsHandler.#preTeamB = preTeamB;
 	}
+	static restoreTeamsHandler() {
+		const payload = TeamsHandler.#getStoredPlayersList();
+		if (!payload) return;
+		const { publicGroup, preTeams } = payload || { publicGroup: [], preTeams: [[], []] };
 
+		const players = new Set([]);
+		const preTeamA = new Set([]);
+		const preTeamB = new Set([]);
+
+		publicGroup.forEach((player) => players.add(player));
+		preTeams[0].forEach((player) => preTeamA.add(player));
+		preTeams[1].forEach((player) => preTeamB.add(player));
+
+		TeamsHandler.#initTeamsHandler(players, preTeamA, preTeamB);
+	}
 	static getAllPlayers(players) {
 		return [...TeamsHandler.#players];
 	}
@@ -19,6 +33,7 @@ export default class TeamsHandler {
 		players.forEach((player) => {
 			TeamsHandler.#players.add(player);
 		});
+		TeamsHandler.#setStoredPlayersList();
 	}
 
 	static addPlayerToPreTeam(player, team) {
@@ -37,6 +52,7 @@ export default class TeamsHandler {
 				TeamsHandler.#players.add(player);
 				break;
 		}
+		TeamsHandler.#setStoredPlayersList();
 	}
 
 	static removeFromPreTeam(player, team) {
@@ -51,16 +67,19 @@ export default class TeamsHandler {
 				break;
 		}
 		TeamsHandler.#players.add(player);
+		TeamsHandler.#setStoredPlayersList();
 	}
 
 	static removePlayers(player) {
 		TeamsHandler.#players.delete(player);
+		TeamsHandler.#setStoredPlayersList();
 	}
 
 	static clearTeams() {
 		TeamsHandler.#players.clear();
 		TeamsHandler.#preTeamA = [];
 		TeamsHandler.#preTeamB = [];
+		TeamsHandler.#setStoredPlayersList();
 		window.dispatchEvent(new Event('clear'));
 	}
 
@@ -82,5 +101,20 @@ export default class TeamsHandler {
 
 	static getPreTeams() {
 		return [[...TeamsHandler.#preTeamA], [...TeamsHandler.#preTeamB]];
+	}
+
+	static #getStoredPlayersList() {
+		const data = localStorage.getItem('player_list');
+		const payload = JSON.parse(data);
+
+		return payload;
+	}
+
+	static #setStoredPlayersList() {
+		const payload = {
+			publicGroup: TeamsHandler.getAllPlayers(),
+			preTeams: TeamsHandler.getPreTeams(),
+		};
+		localStorage.setItem('player_list', JSON.stringify(payload));
 	}
 }

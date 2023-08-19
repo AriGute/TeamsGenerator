@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import Button from './common/Button';
 import TeamCompCard from './common/TeamCompCard';
-import { teams } from '../utils/consts';
-import TeamsHandler from '../services/TeamsHandler';
-import { eventsNames } from '../utils/consts';
+import { teams } from '../../utils/consts';
+import TeamsHandler from './services/TeamsHandler';
+import { eventsNames } from '../../utils/consts';
 const TeamsDisplay = ({ playerList }) => {
 	const [teamA, setTeamA] = useState([]);
 	const [teamB, setTeamB] = useState([]);
@@ -39,8 +38,16 @@ const TeamsDisplay = ({ playerList }) => {
 		<div className='flex items-center rounded'>
 			<TeamCompCard list={teamA} name={teams.A}></TeamCompCard>
 			<div className='flex flex-col'>
-				<Button text={'Generate Teams'} color={'green'} callback={generateTeamsButton}></Button>
-				<Button text={'Clear'} color={'red'} callback={clearButton}></Button>
+				<button
+					className={`bg-green-300 h-10 p-2 m-2 rounded w-[150px] hover:bg-green-400`}
+					onClick={generateTeamsButton}>
+					Generate Teams
+				</button>
+				<button
+					className={`bg-red-300 h-10 p-2 m-2 rounded w-[150px] hover:bg-red-400`}
+					onClick={clearButton}>
+					Clear
+				</button>
 			</div>
 			<TeamCompCard list={teamB} name={teams.B}></TeamCompCard>
 		</div>

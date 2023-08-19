@@ -1,5 +1,4 @@
 import React from 'react';
-import TeamsHandler from '../services/TeamsHandler';
 
 const playerCard = ({ player, removeFunc }) => {
 	function drag(ev) {

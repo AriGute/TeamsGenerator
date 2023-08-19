@@ -1,6 +1,6 @@
 import React from 'react';
 import PlayerCard from '../PlayerCard';
-import { eventsNames } from '../../utils/consts';
+import { eventsNames } from '../../../utils/consts';
 
 const TeamCompCard = ({ list, name, removeFunc }) => {
 	function allowDrop(e) {

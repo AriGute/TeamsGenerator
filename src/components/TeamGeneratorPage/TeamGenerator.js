@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import ImportPlayerList from './ImportPlayerList';
 import TeamCompCard from './common/TeamCompCard';
 import TeamsDisplay from './TeamsDisplay';
-import { eventsNames } from '../utils/consts';
-import TeamsHandler from '../services/TeamsHandler';
+import { eventsNames } from '../../utils/consts';
+import TeamsHandler from './services/TeamsHandler';
 
 const TeamGenerator = () => {
 	const [playerList, setPlayerList] = useState([]);
@@ -31,6 +31,10 @@ const TeamGenerator = () => {
 			eventsNames.addPlayerToPreTeam,
 			addPlayerToPreTeam,
 		);
+
+		TeamsHandler.restoreTeamsHandler();
+		setPlayerList(TeamsHandler.getAllPlayers());
+		window.dispatchEvent(new Event(eventsNames.updateTeams));
 
 		return () => {
 			window.removeEventListener(clearListener);
