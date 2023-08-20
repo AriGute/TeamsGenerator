@@ -1,17 +1,22 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PlayerCard from '../PlayerCard';
 import { eventsNames } from '../../../utils/consts';
+import { DisplayContext } from '../services/Context';
+import TeamsHandler from '../services/TeamsHandler';
 
 const TeamCompCard = ({ list, name, removeFunc }) => {
+	const displayContext = useContext(DisplayContext);
+
 	function allowDrop(e) {
-		e.preventDefault();
+		e.preventDefault(DisplayContext);
 	}
 
 	function drop(e) {
 		e.preventDefault();
-		const data = { player: e.dataTransfer.getData('player'), team: name };
-		const event = new CustomEvent(eventsNames.addPlayerToPreTeam, { detail: data });
-		window.dispatchEvent(event);
+		const player = e.dataTransfer.getData('player');
+		const team = name;
+		TeamsHandler.addPlayerToPreTeam(player, team);
+		displayContext.toUpdate.forEach((f) => f());
 	}
 
 	return (

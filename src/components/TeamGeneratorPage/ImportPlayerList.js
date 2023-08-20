@@ -1,17 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { DisplayContext } from './services/Context';
 
 const ImportPlayerList = ({ callback }) => {
 	const [playerList, setPlayerList] = useState('');
+	const displayContext = useContext(DisplayContext);
 
 	function addPlayerButton() {
 		let list = playerList
 			.split('\n')
-			.filter((p) => p != '')
+			.filter((p) => p != '' && /[a-zA-Z]/.test(p))
 			.map((p) => p.trim());
 		callback(list);
 	}
+	function clear() {
+		setPlayerList([]);
+	}
 
-	window.addEventListener('clear', () => setPlayerList([]));
+	useEffect(() => {
+		displayContext.toClear.push(clear);
+	}, []);
 
 	return (
 		<div className=' text-center'>
