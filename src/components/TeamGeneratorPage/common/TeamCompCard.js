@@ -6,17 +6,17 @@ import TeamsHandler from '../services/TeamsHandler';
 const TeamCompCard = ({ list, name, removeFunc }) => {
 	const displayContext = useContext(DisplayContext);
 
-	function allowDrop(e) {
+	const allowDrop = (e) => {
 		e.preventDefault(DisplayContext);
-	}
+	};
 
-	function drop(e) {
+	const drop = (e) => {
 		e.preventDefault();
 		const player = e.dataTransfer.getData('player');
 		const team = name;
 		TeamsHandler.addPlayerToPreTeam(player, team);
 		displayContext.toUpdate.forEach((f) => f());
-	}
+	};
 
 	return (
 		<div className=' text-center '>

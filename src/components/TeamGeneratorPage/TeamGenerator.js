@@ -14,24 +14,24 @@ const TeamGenerator = () => {
 		setPlayerList(TeamsHandler.getPublicGroup());
 	};
 
-	function importPlayerList(importPlayers) {
+	const importPlayerList = (importPlayers) => {
 		TeamsHandler.addPlayers(importPlayers);
 		setPlayerList(TeamsHandler.getPublicGroup());
-	}
+	};
 
-	function loadPlayersFromStorage(params) {
+	const loadPlayersFromStorage = (params) => {
 		TeamsHandler.restoreTeamsHandler();
 		setPlayerList(TeamsHandler.getPublicGroup());
 		displayContext.toUpdate.forEach((f) => f());
-	}
+	};
 
-	function clear() {
+	const clear = () => {
 		setPlayerList([]);
-	}
+	};
 
-	function updateDisplay() {
+	const updateDisplay = () => {
 		setPlayerList(TeamsHandler.getPublicGroup());
-	}
+	};
 
 	useEffect(() => {
 		displayContext.toClear.push(clear);

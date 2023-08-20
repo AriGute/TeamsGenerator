@@ -9,27 +9,27 @@ const TeamsDisplay = ({ playerList }) => {
 	const [teamB, setTeamB] = useState([]);
 	const displayContext = useContext(DisplayContext);
 
-	function generateTeamsButton() {
+	const generateTeamsButton = () => {
 		const teams = TeamsHandler.getRandomTeams();
 		setTeamA(teams[0]);
 		setTeamB(teams[1]);
-	}
+	};
 
-	function clearButton() {
+	const clearButton = () => {
 		TeamsHandler.clearTeams();
 		displayContext.toClear.forEach((f) => f());
-	}
+	};
 
-	function clear() {
+	const clear = () => {
 		setTeamA([]);
 		setTeamB([]);
-	}
+	};
 
-	function updateDisplay(params) {
+	const updateDisplay = () => {
 		const teams = TeamsHandler.getPreTeams();
 		setTeamA(teams[0]);
 		setTeamB(teams[1]);
-	}
+	};
 
 	useEffect(() => {
 		displayContext.toClear.push(clear);

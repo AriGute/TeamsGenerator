@@ -1,9 +1,9 @@
 import React from 'react';
 
 const playerCard = ({ player, removeFunc }) => {
-	function drag(ev) {
-		ev.dataTransfer.setData('player', player);
-	}
+	const drag = (e) => {
+		e.dataTransfer.setData('player', player);
+	};
 
 	return (
 		<li

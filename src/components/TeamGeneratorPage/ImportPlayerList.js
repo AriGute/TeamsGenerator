@@ -5,16 +5,16 @@ const ImportPlayerList = ({ callback }) => {
 	const [playerList, setPlayerList] = useState('');
 	const displayContext = useContext(DisplayContext);
 
-	function addPlayerButton() {
+	const addPlayerButton = () => {
 		let list = playerList
 			.split('\n')
 			.filter((p) => p != '' && /[a-zA-Z]/.test(p))
 			.map((p) => p.trim());
 		callback(list);
-	}
-	function clear() {
+	};
+	const clear = () => {
 		setPlayerList('');
-	}
+	};
 
 	useEffect(() => {
 		displayContext.toClear.push(clear);
