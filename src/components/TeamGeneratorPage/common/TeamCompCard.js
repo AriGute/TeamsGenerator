@@ -3,7 +3,7 @@ import PlayerCard from '../PlayerCard';
 import { DisplayContext } from '../services/Context';
 import TeamsHandler from '../services/TeamsHandler';
 
-const TeamCompCard = ({ list, name, removeFunc }) => {
+const TeamCompCard = ({ list, name, onRemovePlayer }) => {
 	const displayContext = useContext(DisplayContext);
 
 	const allowDrop = (e) => {
@@ -27,7 +27,9 @@ const TeamCompCard = ({ list, name, removeFunc }) => {
 				onDragOver={allowDrop}>
 				<ul>
 					{list.map((item, i) => {
-						return <PlayerCard key={item + i} player={item} removeFunc={removeFunc}></PlayerCard>;
+						return (
+							<PlayerCard key={item + i} player={item} onRemovePlayer={onRemovePlayer}></PlayerCard>
+						);
 					})}
 				</ul>
 			</div>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { DisplayContext } from './services/Context';
 
-const ImportPlayerList = ({ callback }) => {
+const ImportPlayerList = ({ onImportPlayerList }) => {
 	const [playerList, setPlayerList] = useState('');
 	const displayContext = useContext(DisplayContext);
 
@@ -10,7 +10,7 @@ const ImportPlayerList = ({ callback }) => {
 			.split('\n')
 			.filter((p) => p != '' && /[a-zA-Z]/.test(p))
 			.map((p) => p.trim());
-		callback(list);
+		onImportPlayerList(list);
 	};
 	const onClear = () => {
 		setPlayerList('');

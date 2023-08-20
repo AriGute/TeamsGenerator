@@ -9,7 +9,7 @@ const TeamGenerator = () => {
 	const [playerList, setPlayerList] = useState([]);
 	const displayContext = useContext(DisplayContext);
 
-	const removePlayer = (player) => {
+	const onRemovePlayer = (player) => {
 		TeamsHandler.removePlayers(player);
 		setPlayerList(TeamsHandler.getPublicGroup());
 	};
@@ -46,7 +46,7 @@ const TeamGenerator = () => {
 				<TeamCompCard
 					list={playerList}
 					name={'Players'}
-					onRemovePlayer={removePlayer}></TeamCompCard>
+					onRemovePlayer={onRemovePlayer}></TeamCompCard>
 				<TeamsDisplay playerList={playerList}></TeamsDisplay>
 			</DisplayContext.Provider>
 		</div>
