@@ -12,12 +12,12 @@ const ImportPlayerList = ({ callback }) => {
 			.map((p) => p.trim());
 		callback(list);
 	};
-	const clear = () => {
+	const onClear = () => {
 		setPlayerList('');
 	};
 
 	useEffect(() => {
-		displayContext.toClear.push(clear);
+		displayContext.toClear.push(onClear);
 	}, []);
 
 	return (

@@ -20,20 +20,20 @@ const TeamsDisplay = ({ playerList }) => {
 		displayContext.toClear.forEach((f) => f());
 	};
 
-	const clear = () => {
+	const onClear = () => {
 		setTeamA([]);
 		setTeamB([]);
 	};
 
-	const updateDisplay = () => {
+	const onUpdateDisplay = () => {
 		const teams = TeamsHandler.getPreTeams();
 		setTeamA(teams[0]);
 		setTeamB(teams[1]);
 	};
 
 	useEffect(() => {
-		displayContext.toClear.push(clear);
-		displayContext.toUpdate.push(updateDisplay);
+		displayContext.toClear.push(onClear);
+		displayContext.toUpdate.push(onUpdateDisplay);
 	}, []);
 
 	return (

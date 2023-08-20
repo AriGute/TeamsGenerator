@@ -14,7 +14,7 @@ const TeamGenerator = () => {
 		setPlayerList(TeamsHandler.getPublicGroup());
 	};
 
-	const importPlayerList = (importPlayers) => {
+	const onImportPlayerList = (importPlayers) => {
 		TeamsHandler.addPlayers(importPlayers);
 		setPlayerList(TeamsHandler.getPublicGroup());
 	};
@@ -25,25 +25,28 @@ const TeamGenerator = () => {
 		displayContext.toUpdate.forEach((f) => f());
 	};
 
-	const clear = () => {
+	const onClear = () => {
 		setPlayerList([]);
 	};
 
-	const updateDisplay = () => {
+	const onUpdateDisplay = () => {
 		setPlayerList(TeamsHandler.getPublicGroup());
 	};
 
 	useEffect(() => {
-		displayContext.toClear.push(clear);
-		displayContext.toUpdate.push(updateDisplay);
+		displayContext.toClear.push(onClear);
+		displayContext.toUpdate.push(onUpdateDisplay);
 		loadPlayersFromStorage();
 	}, []);
 
 	return (
 		<div className='flex flex-col items-center'>
 			<DisplayContext.Provider value={displayContext}>
-				<ImportPlayerList callback={importPlayerList}></ImportPlayerList>
-				<TeamCompCard list={playerList} name={'Players'} removeFunc={removePlayer}></TeamCompCard>
+				<ImportPlayerList onImportPlayerList={onImportPlayerList}></ImportPlayerList>
+				<TeamCompCard
+					list={playerList}
+					name={'Players'}
+					onRemovePlayer={removePlayer}></TeamCompCard>
 				<TeamsDisplay playerList={playerList}></TeamsDisplay>
 			</DisplayContext.Provider>
 		</div>
