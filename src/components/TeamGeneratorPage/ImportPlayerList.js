@@ -13,7 +13,7 @@ const ImportPlayerList = ({ callback }) => {
 		callback(list);
 	}
 	function clear() {
-		setPlayerList([]);
+		setPlayerList('');
 	}
 
 	useEffect(() => {

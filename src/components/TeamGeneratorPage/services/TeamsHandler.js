@@ -83,8 +83,8 @@ export default class TeamsHandler {
 
 	static clearTeams() {
 		TeamsHandler.#players.clear();
-		TeamsHandler.#preTeamA = [];
-		TeamsHandler.#preTeamB = [];
+		TeamsHandler.#preTeamA.clear();
+		TeamsHandler.#preTeamB.clear();
 		TeamsHandler.#setStoredPlayersList();
 	}
 
