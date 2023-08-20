@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import PlayerCard from '../PlayerCard';
-import { eventsNames } from '../../../utils/consts';
 import { DisplayContext } from '../services/Context';
 import TeamsHandler from '../services/TeamsHandler';
 

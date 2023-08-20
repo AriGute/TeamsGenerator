@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext } from 'react';
 import ImportPlayerList from './ImportPlayerList';
 import TeamCompCard from './common/TeamCompCard';
 import TeamsDisplay from './TeamsDisplay';
-import { eventsNames } from '../../utils/consts';
 import TeamsHandler from './services/TeamsHandler';
 import { DisplayContext } from './services/Context';
 
