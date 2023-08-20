@@ -25,13 +25,19 @@ export default class TeamsHandler {
 
 		TeamsHandler.#initTeamsHandler(players, preTeamA, preTeamB);
 	}
-	static getAllPlayers(players) {
+	static getPublicGroup(players) {
 		return [...TeamsHandler.#players];
+	}
+
+	static getAllPlayers(players) {
+		return [...TeamsHandler.#players, ...TeamsHandler.#preTeamA, ...TeamsHandler.#preTeamB];
 	}
 
 	static addPlayers(players) {
 		players.forEach((player) => {
-			TeamsHandler.#players.add(player);
+			if (!TeamsHandler.#hasPlayer(player)) {
+				TeamsHandler.#players.add(player);
+			}
 		});
 		TeamsHandler.#setStoredPlayersList();
 	}
@@ -77,10 +83,9 @@ export default class TeamsHandler {
 
 	static clearTeams() {
 		TeamsHandler.#players.clear();
-		TeamsHandler.#preTeamA = [];
-		TeamsHandler.#preTeamB = [];
+		TeamsHandler.#preTeamA.clear();
+		TeamsHandler.#preTeamB.clear();
 		TeamsHandler.#setStoredPlayersList();
-		window.dispatchEvent(new Event('clear'));
 	}
 
 	static getRandomTeams() {
@@ -112,9 +117,17 @@ export default class TeamsHandler {
 
 	static #setStoredPlayersList() {
 		const payload = {
-			publicGroup: TeamsHandler.getAllPlayers(),
+			publicGroup: TeamsHandler.getPublicGroup(),
 			preTeams: TeamsHandler.getPreTeams(),
 		};
 		localStorage.setItem('player_list', JSON.stringify(payload));
+	}
+
+	static #hasPlayer(player) {
+		return (
+			TeamsHandler.#players?.has(player) |
+			TeamsHandler.#preTeamA?.has(player) |
+			TeamsHandler.#preTeamB?.has(player)
+		);
 	}
 }

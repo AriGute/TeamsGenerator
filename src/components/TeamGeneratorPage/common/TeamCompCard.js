@@ -1,18 +1,22 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PlayerCard from '../PlayerCard';
-import { eventsNames } from '../../../utils/consts';
+import { DisplayContext } from '../services/Context';
+import TeamsHandler from '../services/TeamsHandler';
 
-const TeamCompCard = ({ list, name, removeFunc }) => {
-	function allowDrop(e) {
-		e.preventDefault();
-	}
+const TeamCompCard = ({ list, name, onRemovePlayer }) => {
+	const displayContext = useContext(DisplayContext);
 
-	function drop(e) {
+	const allowDrop = (e) => {
+		e.preventDefault(DisplayContext);
+	};
+
+	const drop = (e) => {
 		e.preventDefault();
-		const data = { player: e.dataTransfer.getData('player'), team: name };
-		const event = new CustomEvent(eventsNames.addPlayerToPreTeam, { detail: data });
-		window.dispatchEvent(event);
-	}
+		const player = e.dataTransfer.getData('player');
+		const team = name;
+		TeamsHandler.addPlayerToPreTeam(player, team);
+		displayContext.toUpdate.forEach((f) => f());
+	};
 
 	return (
 		<div className=' text-center '>
@@ -23,7 +27,9 @@ const TeamCompCard = ({ list, name, removeFunc }) => {
 				onDragOver={allowDrop}>
 				<ul>
 					{list.map((item, i) => {
-						return <PlayerCard key={item + i} player={item} removeFunc={removeFunc}></PlayerCard>;
+						return (
+							<PlayerCard key={item + i} player={item} onRemovePlayer={onRemovePlayer}></PlayerCard>
+						);
 					})}
 				</ul>
 			</div>

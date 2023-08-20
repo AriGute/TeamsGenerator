@@ -1,37 +1,39 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import TeamCompCard from './common/TeamCompCard';
-import { teams } from '../../utils/consts';
 import TeamsHandler from './services/TeamsHandler';
-import { eventsNames } from '../../utils/consts';
+import { DisplayContext } from './services/Context';
+import { teams } from '../../utils/consts';
+
 const TeamsDisplay = ({ playerList }) => {
 	const [teamA, setTeamA] = useState([]);
 	const [teamB, setTeamB] = useState([]);
+	const displayContext = useContext(DisplayContext);
 
-	function generateTeamsButton() {
+	const generateTeamsButton = () => {
 		const teams = TeamsHandler.getRandomTeams();
 		setTeamA(teams[0]);
 		setTeamB(teams[1]);
-	}
+	};
 
-	function clearButton() {
+	const clearButton = () => {
 		TeamsHandler.clearTeams();
-	}
+		displayContext.toClear.forEach((f) => f());
+	};
+
+	const onClear = () => {
+		setTeamA([]);
+		setTeamB([]);
+	};
+
+	const onUpdateDisplay = () => {
+		const teams = TeamsHandler.getPreTeams();
+		setTeamA(teams[0]);
+		setTeamB(teams[1]);
+	};
 
 	useEffect(() => {
-		const clearListener = window.addEventListener(eventsNames.clear, () => {
-			setTeamA([]);
-			setTeamB([]);
-		});
-		const updateTeamsListener = window.addEventListener(eventsNames.updateTeams, () => {
-			const teams = TeamsHandler.getPreTeams();
-			setTeamA(teams[0]);
-			setTeamB(teams[1]);
-		});
-
-		return () => {
-			window.removeEventListener(clearListener);
-			window.removeEventListener(updateTeamsListener);
-		};
+		displayContext.toClear.push(onClear);
+		displayContext.toUpdate.push(onUpdateDisplay);
 	}, []);
 
 	return (
