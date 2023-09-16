@@ -2,9 +2,9 @@
   "name": "teamsgenerator",
   "version": "1.0.0",
   "description": "Generate Teams from list of names",
-  "main": "index.js",
   "scripts": {
-    "start": "npx parcel src/index.html --no-cache"
+    "start": "npx parcel src/index.html --no-cache",
+    "build": "npx parcel build src/index.html --no-cache"
   },
   "author": "Ariel Gueta",
   "license": "ISC",
