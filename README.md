@@ -1,6 +1,6 @@
 # Teams Generator
 
-Import players names and let the software generate two teams from the players list.
+Import player or list of players and let the software generate two teams from the players list.
 
 ## Features
 
