@@ -1,8 +1,9 @@
 import React from 'react';
 
-const playerCard = ({ player, onRemovePlayer }) => {
+const playerCard = ({ player, onRemovePlayer, team }) => {
 	const drag = (e) => {
 		e.dataTransfer.setData('player', player);
+		e.dataTransfer.setData('team', team);
 	};
 
 	return (

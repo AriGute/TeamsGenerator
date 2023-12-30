@@ -1,16 +1,17 @@
 import React, { useState, useEffect, useContext } from 'react';
-import ImportPlayerList from './ImportPlayerList';
-import TeamCompCard from './common/TeamCompCard';
-import TeamsDisplay from './TeamsDisplay';
-import TeamsHandler from './services/TeamsHandler';
-import { DisplayContext } from './services/Context';
+import ImportPlayerList from '../ImportPlayerList.js';
+import TeamCompCard from '../common/TeamCompCard.js';
+import TeamsDisplay from './TeamsDisplay.js';
+import TeamsHandler from '../services/teamsHandler/TeamsHandler.js';
+import { constTeams } from '../../../utils/consts.js';
+import { DisplayContext } from '../services/Context.js';
 
 const TeamGenerator = () => {
 	const [playerList, setPlayerList] = useState([]);
 	const displayContext = useContext(DisplayContext);
 
 	const onRemovePlayer = (player) => {
-		TeamsHandler.removePlayers(player);
+		TeamsHandler.removePlayerFromTeam(player, constTeams.publicGroup);
 		setPlayerList(TeamsHandler.getPublicGroup());
 	};
 
@@ -44,7 +45,7 @@ const TeamGenerator = () => {
 			<DisplayContext.Provider value={displayContext}>
 				<ImportPlayerList onImportPlayerList={onImportPlayerList}></ImportPlayerList>
 				<TeamCompCard
-					list={playerList}
+					teamSet={playerList}
 					name={'Players'}
 					onRemovePlayer={onRemovePlayer}></TeamCompCard>
 				<TeamsDisplay playerList={playerList}></TeamsDisplay>

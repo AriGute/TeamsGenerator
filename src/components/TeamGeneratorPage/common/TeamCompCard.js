@@ -1,34 +1,47 @@
 import React, { useContext } from 'react';
 import PlayerCard from '../PlayerCard';
+import TeamsHandler from '../services/teamsHandler/TeamsHandler';
 import { DisplayContext } from '../services/Context';
-import TeamsHandler from '../services/TeamsHandler';
 
-const TeamCompCard = ({ list, name, onRemovePlayer }) => {
+/**
+ * @param {Set} team
+ * @param {string} name
+ * @param {function} onRemovePlayer
+ */
+const TeamCompCard = ({ teamSet, name: teamName, onRemovePlayer }) => {
+	let teamList = teamSet && [...teamSet];
 	const displayContext = useContext(DisplayContext);
 
 	const allowDrop = (e) => {
-		e.preventDefault(DisplayContext);
+		e.preventDefault();
 	};
 
 	const drop = (e) => {
 		e.preventDefault();
 		const player = e.dataTransfer.getData('player');
-		const team = name;
-		TeamsHandler.addPlayerToPreTeam(player, team);
+		const currentTeam = e.dataTransfer.getData('team');
+		const moveToTeam = teamName;
+
+		TeamsHandler.removePlayerFromTeam(player, currentTeam);
+		TeamsHandler.addPlayerToPreTeam(player, moveToTeam);
 		displayContext.toUpdate.forEach((f) => f());
 	};
 
 	return (
-		<div className=' text-center '>
-			<h1 className=' underline'>{name + ` [${list.length}]`}</h1>
+		<div className=' text-center m-1'>
+			<h1 className=' underline'>{`team: ` + teamName + ` [${teamList.length}]`}</h1>
 			<div
 				className='w-[300px] min-h-[150px] max-h-[200px] bg-slate-100 rounded overflow-y-auto'
 				onDrop={drop}
 				onDragOver={allowDrop}>
 				<ul>
-					{list.map((item, i) => {
+					{teamList.map((item, i) => {
 						return (
-							<PlayerCard key={item + i} player={item} onRemovePlayer={onRemovePlayer}></PlayerCard>
+							<PlayerCard
+								key={item + i}
+								player={item}
+								onRemovePlayer={onRemovePlayer}
+								team={teamName}></PlayerCard>
 						);
 					})}
 				</ul>

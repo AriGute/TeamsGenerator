@@ -1,13 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider, Outlet, Link } from 'react-router-dom';
-import TeamGenerator from './components/TeamGeneratorPage/TeamGenerator';
+import TeamGenerator from './components/TeamGeneratorPage/TeamsDisplay/TeamGenerator';
 import About from './components/AboutPage/About';
 import Header from './components/Header';
 
 const App = () => {
 	return (
-		<div className='   w-screen h-screen bg-blue-100 absolute top-0'>
+		<div className='   w-screen min-h-full bg-blue-100 absolute top-0'>
 			<Header />
 			<Outlet />
 			<div className='text-center'>
