@@ -33,13 +33,13 @@ const TeamsDisplay = ({ playerList }) => {
 
 	return (
 		<div className=' flex flex-col items-center my-4'>
-			<AddRemoveTeam setPreTeams={setPreTeams}></AddRemoveTeam>
+			<AddRemoveTeam setPreTeams={setPreTeams} />
 			<div className='flex items-center justify-center flex-wrap'>
 				{preTeams.length === 0 ? (
 					<p className=' text-red-500 m-5'>There is 0 teams</p>
 				) : (
 					preTeams.map((preTeam, i) => {
-						return <TeamCompCard teamSet={preTeam} name={i} key={i}></TeamCompCard>;
+						return <TeamCompCard teamSet={preTeam} name={i} key={i} />;
 					})
 				)}
 			</div>

@@ -43,12 +43,9 @@ const TeamGenerator = () => {
 	return (
 		<div className='flex flex-col items-center'>
 			<DisplayContext.Provider value={displayContext}>
-				<ImportPlayerList onImportPlayerList={onImportPlayerList}></ImportPlayerList>
-				<TeamCompCard
-					teamSet={playerList}
-					name={'Players'}
-					onRemovePlayer={onRemovePlayer}></TeamCompCard>
-				<TeamsDisplay playerList={playerList}></TeamsDisplay>
+				<ImportPlayerList onImportPlayerList={onImportPlayerList} />
+				<TeamCompCard teamSet={playerList} name={'Players'} onRemovePlayer={onRemovePlayer} />
+				<TeamsDisplay playerList={playerList} />
 			</DisplayContext.Provider>
 		</div>
 	);

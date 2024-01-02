@@ -30,6 +30,7 @@ export default class TeamsHandler {
 	 * @returns the removed team
 	 */
 	static removeTeam() {
+		if (this.#preTeams.length === 0) return null;
 		let team = this.#preTeams.shift();
 		if (team.size) TeamsHandler.addPlayers([...team]);
 		TeamsHandlerStorage.set();
@@ -100,13 +101,16 @@ export default class TeamsHandler {
 		this.getPreTeams().forEach((team, i) => teams.push([new Set([...team]), i]));
 		teams.sort((a, b) => (a[0] < b[0] ? -1 : 1));
 
-		let publicGroup = [...TeamsHandler.#publicGroup];
 		const size = publicGroup.length;
+		let publicGroup = [...TeamsHandler.#publicGroup];
+		let rand;
+		let pick;
+		let index;
 
 		for (let i = 0; i < size; i++) {
-			let rand = Math.round(Math.random() * (publicGroup.length - 1));
-			let pick = publicGroup[rand];
-			let index = 0;
+			rand = Math.round(Math.random() * (publicGroup.length - 1));
+			pick = publicGroup[rand];
+			index = 0;
 
 			if (teams[index + 1]) {
 				while (teams[index][0].size >= teams[index + 1][0].size) {
@@ -119,6 +123,7 @@ export default class TeamsHandler {
 			if (index === teams.length - 1) index = 0;
 			publicGroup.splice(rand, 1);
 		}
+
 		teams.sort((a, b) => (a[1] < b[1] ? -1 : 1));
 		teams = teams.map((team) => team[0]);
 
