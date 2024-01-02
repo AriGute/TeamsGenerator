@@ -1,18 +1,16 @@
 import React, { useState, useEffect, useContext } from 'react';
-import TeamCompCard from './common/TeamCompCard';
-import TeamsHandler from './services/TeamsHandler';
-import { DisplayContext } from './services/Context';
-import { teams } from '../../utils/consts';
+import TeamCompCard from '../common/TeamCompCard';
+import TeamsHandler from '../services/teamsHandler/TeamsHandler';
+import AddRemoveTeam from './AddRemoveTeam';
+import { DisplayContext } from '../services/Context';
 
 const TeamsDisplay = ({ playerList }) => {
-	const [teamA, setTeamA] = useState([]);
-	const [teamB, setTeamB] = useState([]);
+	const [preTeams, setPreTeams] = useState([]);
 	const displayContext = useContext(DisplayContext);
 
 	const generateTeamsButton = () => {
 		const teams = TeamsHandler.getRandomTeams();
-		setTeamA(teams[0]);
-		setTeamB(teams[1]);
+		setPreTeams([...teams]);
 	};
 
 	const clearButton = () => {
@@ -21,14 +19,11 @@ const TeamsDisplay = ({ playerList }) => {
 	};
 
 	const onClear = () => {
-		setTeamA([]);
-		setTeamB([]);
+		setPreTeams([]);
 	};
 
 	const onUpdateDisplay = () => {
-		const teams = TeamsHandler.getPreTeams();
-		setTeamA(teams[0]);
-		setTeamB(teams[1]);
+		setPreTeams([...TeamsHandler.getPreTeams()]);
 	};
 
 	useEffect(() => {
@@ -37,8 +32,17 @@ const TeamsDisplay = ({ playerList }) => {
 	}, []);
 
 	return (
-		<div className='flex items-center rounded'>
-			<TeamCompCard list={teamA} name={teams.A}></TeamCompCard>
+		<div className=' flex flex-col items-center my-4'>
+			<AddRemoveTeam setPreTeams={setPreTeams} />
+			<div className='flex items-center justify-center flex-wrap'>
+				{preTeams.length === 0 ? (
+					<p className=' text-red-500 m-5'>There is 0 teams</p>
+				) : (
+					preTeams.map((preTeam, i) => {
+						return <TeamCompCard teamSet={preTeam} name={i} key={i} />;
+					})
+				)}
+			</div>
 			<div className='flex flex-col'>
 				<button
 					className={`bg-green-300 h-10 p-2 m-2 rounded w-[150px] hover:bg-green-400`}
@@ -51,7 +55,6 @@ const TeamsDisplay = ({ playerList }) => {
 					Clear
 				</button>
 			</div>
-			<TeamCompCard list={teamB} name={teams.B}></TeamCompCard>
 		</div>
 	);
 };

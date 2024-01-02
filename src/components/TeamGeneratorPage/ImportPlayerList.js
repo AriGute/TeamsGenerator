@@ -31,7 +31,8 @@ const ImportPlayerList = ({ onImportPlayerList }) => {
 					cols='30'
 					rows='5'
 					value={playerList.toString().replaceAll(',', '\n')}
-					onChange={(e) => setPlayerList(e.target.value)}></textarea>
+					onChange={(e) => setPlayerList(e.target.value)}
+				/>
 				<button
 					className={`bg-gray-300 h-10 p-2 m-2 rounded w-[150px] hover:bg-gray-400`}
 					onClick={addPlayerButton}>

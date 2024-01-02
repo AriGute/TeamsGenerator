@@ -1,1 +1,1 @@
-export const teams = { A: 'teamA', B: 'teamB', publicGroup: 'Players' };
+export const constTeams = { publicGroup: 'Players' };
