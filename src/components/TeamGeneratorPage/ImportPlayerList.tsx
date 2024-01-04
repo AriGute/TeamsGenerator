@@ -1,7 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { DisplayContext } from './services/Context';
 
-const ImportPlayerList = ({ onImportPlayerList }) => {
+interface ImportPlayerListProps {
+	onImportPlayerList: Function;
+}
+
+const ImportPlayerList = ({ onImportPlayerList }: ImportPlayerListProps) => {
 	const [playerList, setPlayerList] = useState('');
 	const displayContext = useContext(DisplayContext);
 
@@ -28,8 +32,8 @@ const ImportPlayerList = ({ onImportPlayerList }) => {
 					className=' bg-gray-100 w-[300px] rounded'
 					name=''
 					id='playersToImport'
-					cols='30'
-					rows='5'
+					cols={30}
+					rows={5}
 					value={playerList.toString().replaceAll(',', '\n')}
 					onChange={(e) => setPlayerList(e.target.value)}
 				/>

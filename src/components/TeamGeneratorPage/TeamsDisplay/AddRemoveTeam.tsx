@@ -1,8 +1,13 @@
 import React, { useContext } from 'react';
 import TeamsHandler from '../services/teamsHandler/TeamsHandler';
 import { DisplayContext } from '../services/Context';
+import { Teams } from '../services/teamsHandler/TeamsHandlerInterface';
 
-const AddRemoveTeam = ({ setPreTeams }) => {
+interface AddRemoveTeamProps {
+	setPreTeams: Function;
+}
+
+const AddRemoveTeam = ({ setPreTeams }: AddRemoveTeamProps) => {
 	const displayContext = useContext(DisplayContext);
 
 	const addTeam = () => {
@@ -13,7 +18,7 @@ const AddRemoveTeam = ({ setPreTeams }) => {
 	const removeTeam = () => {
 		TeamsHandler.removeTeam();
 		setPreTeams([...TeamsHandler.getPreTeams()]);
-		displayContext.toUpdate.forEach((f) => f());
+		displayContext.toUpdate.forEach((updateFunction: Function) => updateFunction());
 	};
 	return (
 		<div className=' flex flex-row'>

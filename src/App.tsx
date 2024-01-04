@@ -1,9 +1,9 @@
-import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider, Outlet, Link } from 'react-router-dom';
 import TeamGenerator from './components/TeamGeneratorPage/TeamsDisplay/TeamGenerator';
 import About from './components/AboutPage/About';
 import Header from './components/Header';
+import React from 'react';
 
 const App = () => {
 	return (
@@ -40,6 +40,6 @@ const appRouter = createBrowserRouter([
 	},
 ]);
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-
-root.render(<RouterProvider router={appRouter} />);
+const element: HTMLElement | null = document.getElementById('root');
+const root = element && ReactDOM.createRoot(element);
+root && root.render(<RouterProvider router={appRouter} />);

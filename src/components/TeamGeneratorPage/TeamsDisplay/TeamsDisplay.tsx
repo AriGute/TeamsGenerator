@@ -3,30 +3,35 @@ import TeamCompCard from '../common/TeamCompCard';
 import TeamsHandler from '../services/teamsHandler/TeamsHandler';
 import AddRemoveTeam from './AddRemoveTeam';
 import { DisplayContext } from '../services/Context';
+import { Players, Teams } from '../services/teamsHandler/TeamsHandlerInterface';
 
-const TeamsDisplay = ({ playerList }) => {
-	const [preTeams, setPreTeams] = useState([]);
+interface TeamsDisplayProps {
+	players?: Players;
+}
+
+const TeamsDisplay = ({ players }: TeamsDisplayProps) => {
+	const [preTeams, setPreTeams] = useState<Teams>([]);
 	const displayContext = useContext(DisplayContext);
 
-	const generateTeamsButton = () => {
-		const teams = TeamsHandler.getRandomTeams();
+	const generateTeamsButton = (): void => {
+		const teams: Teams = TeamsHandler.getRandomTeams();
 		setPreTeams([...teams]);
 	};
 
-	const clearButton = () => {
+	const clearButton = (): void => {
 		TeamsHandler.clearTeams();
 		displayContext.toClear.forEach((f) => f());
 	};
 
-	const onClear = () => {
+	const onClear = (): void => {
 		setPreTeams([]);
 	};
 
-	const onUpdateDisplay = () => {
+	const onUpdateDisplay = (): void => {
 		setPreTeams([...TeamsHandler.getPreTeams()]);
 	};
 
-	useEffect(() => {
+	useEffect((): void => {
 		displayContext.toClear.push(onClear);
 		displayContext.toUpdate.push(onUpdateDisplay);
 	}, []);
@@ -39,7 +44,7 @@ const TeamsDisplay = ({ playerList }) => {
 					<p className=' text-red-500 m-5'>There is 0 teams</p>
 				) : (
 					preTeams.map((preTeam, i) => {
-						return <TeamCompCard teamSet={preTeam} name={i} key={i} />;
+						return <TeamCompCard Players={[...preTeam]} teamName={i} key={i} />;
 					})
 				)}
 			</div>
