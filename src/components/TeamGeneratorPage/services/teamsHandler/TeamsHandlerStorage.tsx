@@ -1,26 +1,27 @@
+import { storageGetterResults, Teams, Team } from './TeamsHandlerInterface';
 import TeamsHandler from './TeamsHandler';
 
 export default class TeamsHandlerStorage {
-	static get() {
-		const data = localStorage.getItem('player_list');
+	static get(): storageGetterResults {
+		const data: string = localStorage.getItem('player_list') || '';
 		const payload = JSON.parse(data);
 		if (!payload)
 			return {
-				publicGroup: new Set([]),
-				preTeams: [],
+				restoredPublicGroup: new Set([]),
+				restoredPreTeams: [],
 			};
 
 		const { publicGroup, preTeams } = payload;
-		const restoredPublicGroup = new Set([]);
-		const restoredPreTeams = [];
+		const restoredPublicGroup: Team = new Set([]);
+		const restoredPreTeams: Teams = [];
 
-		preTeams.forEach((team) => {
-			let tempTeam = new Set([]);
-			[...team].forEach((player) => tempTeam.add(player));
+		preTeams.forEach((team: string) => {
+			let tempTeam: Team = new Set([]);
+			[...team].forEach((player: string) => tempTeam.add(player));
 			restoredPreTeams.push(tempTeam);
 		});
 
-		publicGroup.forEach((player) => {
+		publicGroup.forEach((player: string) => {
 			restoredPublicGroup.add(player);
 		});
 
