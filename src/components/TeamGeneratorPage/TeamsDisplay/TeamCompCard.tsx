@@ -13,9 +13,11 @@ interface TeamCompCardProps {
 const TeamCompCard = ({ Players, teamIndex, onRemovePlayer }: TeamCompCardProps) => {
 	let teamList = Players && [...Players];
 	const displayContext = useContext(DisplayContext);
+
 	const teamName: string = (
 		teamIndex === ConstTeamsIndex.publicGroup ? 'Public Group' : teamIndex
 	).toString();
+
 	const allowDrop = (dragEvent: React.DragEvent) => {
 		dragEvent.preventDefault();
 	};
