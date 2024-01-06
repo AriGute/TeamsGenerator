@@ -104,10 +104,12 @@ export default class TeamsHandler {
 		let team: Team;
 		const size: number = publicGroup.length;
 
+		// before optimize pre-teams e.g: [[p,p], [], [p], []]
 		const beforeOptimizePreTeamsList: ToOptimizeTeams = this.getPreTeams().map((team, i) => [
 			new Set([...team]),
 			i,
 		]);
+		// after optimize pre-teams e.g: [[] , [], [p], [p,p]]
 		const optimizedPreTeamsList = beforeOptimizePreTeamsList.toSorted((a, b) =>
 			a[0].size < b[0].size ? -1 : 1,
 		);
