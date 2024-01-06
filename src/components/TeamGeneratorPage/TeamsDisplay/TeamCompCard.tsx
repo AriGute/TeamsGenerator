@@ -1,19 +1,21 @@
 import React, { useContext } from 'react';
-import PlayerCard from '../PlayerCard';
+import PlayerCard from './PlayerCard';
 import TeamsHandler from '../services/teamsHandler/TeamsHandler';
 import { DisplayContext } from '../services/Context';
-import { Player, Players } from '../services/teamsHandler/TeamsHandlerInterface';
+import { ConstTeamsIndex, Player, Players } from '../services/teamsHandler/TeamsHandlerInterface';
 
 interface TeamCompCardProps {
 	Players: Players;
-	teamName: number;
+	teamIndex: number;
 	onRemovePlayer?: Function;
 }
 
-const TeamCompCard = ({ Players, teamName, onRemovePlayer }: TeamCompCardProps) => {
+const TeamCompCard = ({ Players, teamIndex, onRemovePlayer }: TeamCompCardProps) => {
 	let teamList = Players && [...Players];
 	const displayContext = useContext(DisplayContext);
-
+	const teamName: string = (
+		teamIndex === ConstTeamsIndex.publicGroup ? 'Public Group' : teamIndex
+	).toString();
 	const allowDrop = (dragEvent: React.DragEvent) => {
 		dragEvent.preventDefault();
 	};
@@ -21,10 +23,10 @@ const TeamCompCard = ({ Players, teamName, onRemovePlayer }: TeamCompCardProps) 
 	const drop = (dragEvent: React.DragEvent) => {
 		dragEvent.preventDefault();
 		const player = dragEvent.dataTransfer.getData('player');
-		const currentTeam: unknown = dragEvent.dataTransfer.getData('team');
-		const moveToTeam: unknown = teamName;
-		if (typeof currentTeam === 'number') TeamsHandler.removePlayerFromTeam(player, currentTeam);
-		if (typeof moveToTeam === 'number') TeamsHandler.addPlayerToPreTeam(player, moveToTeam);
+		const currentTeam: string = dragEvent.dataTransfer.getData('team');
+		const moveToTeam: string = teamName;
+		TeamsHandler.removePlayerFromTeam(player, parseInt(currentTeam));
+		TeamsHandler.addPlayerToPreTeam(player, parseInt(moveToTeam));
 		displayContext.toUpdate.forEach((updateFunction: Function) => updateFunction());
 	};
 
@@ -41,7 +43,7 @@ const TeamCompCard = ({ Players, teamName, onRemovePlayer }: TeamCompCardProps) 
 							<PlayerCard
 								key={player + i}
 								player={player}
-								teamName={teamName}
+								teamName={teamIndex}
 								onRemovePlayer={onRemovePlayer}></PlayerCard>
 						);
 					})}

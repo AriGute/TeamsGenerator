@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import TeamsHandler from '../services/teamsHandler/TeamsHandler';
 import { DisplayContext } from '../services/Context';
-import { Teams } from '../services/teamsHandler/TeamsHandlerInterface';
 
 interface AddRemoveTeamProps {
 	setPreTeams: Function;

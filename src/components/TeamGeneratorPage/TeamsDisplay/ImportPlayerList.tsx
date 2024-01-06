@@ -1,26 +1,26 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { DisplayContext } from './services/Context';
+import { DisplayContext } from '../services/Context';
 
 interface ImportPlayerListProps {
 	onImportPlayerList: Function;
 }
 
 const ImportPlayerList = ({ onImportPlayerList }: ImportPlayerListProps) => {
-	const [playerList, setPlayerList] = useState('');
+	const [playerList, setPlayerList] = useState<string>('');
 	const displayContext = useContext(DisplayContext);
 
-	const addPlayerButton = () => {
+	const addPlayerButton = (): void => {
 		let list = playerList
 			.split('\n')
 			.filter((p) => p != '' && /[a-zA-Z]/.test(p))
 			.map((p) => p.trim());
 		onImportPlayerList(list);
 	};
-	const onClear = () => {
+	const onClear = (): void => {
 		setPlayerList('');
 	};
 
-	useEffect(() => {
+	useEffect((): void => {
 		displayContext.toClear.push(onClear);
 	}, []);
 

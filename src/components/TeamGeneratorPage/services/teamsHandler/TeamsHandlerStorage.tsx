@@ -3,16 +3,16 @@ import TeamsHandler from './TeamsHandler';
 
 export default class TeamsHandlerStorage {
 	static get(): StorageGetterResults {
-		const data: string = localStorage.getItem('player_list') || '';
-		const payload = JSON.parse(data);
-		if (!payload)
+		const data: string | null = localStorage.getItem('player_list') || null;
+		if (!data) {
+			const publicGroup: Team = new Set();
 			return {
-				restoredPublicGroup: new Set([]),
-				restoredPreTeams: [],
+				restoredPreTeams: [publicGroup],
 			};
+		}
+		const payload = JSON.parse(data);
 
-		const { publicGroup, preTeams } = payload;
-		const restoredPublicGroup: Team = new Set([]);
+		const { preTeams } = payload;
 		const restoredPreTeams: Teams = [];
 
 		preTeams.forEach((team: string) => {
@@ -21,17 +21,15 @@ export default class TeamsHandlerStorage {
 			restoredPreTeams.push(tempTeam);
 		});
 
-		publicGroup.forEach((player: string) => {
-			restoredPublicGroup.add(player);
-		});
-
-		return { restoredPublicGroup, restoredPreTeams };
+		return { restoredPreTeams };
 	}
 
 	static set() {
+		const publicGroup = TeamsHandler.getPublicGroup();
+		const preTeams = TeamsHandler.getPreTeams();
+		const toStoreData = [publicGroup, ...preTeams];
 		const payload = {
-			publicGroup: TeamsHandler.getPublicGroup(),
-			preTeams: TeamsHandler.getPreTeams().map((team) => [...team]),
+			preTeams: toStoreData.map((team) => [...team]),
 		};
 		localStorage.setItem('player_list', JSON.stringify(payload));
 	}

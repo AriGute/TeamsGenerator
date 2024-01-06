@@ -1,4 +1,4 @@
-import { Player, Team } from './services/teamsHandler/TeamsHandlerInterface';
+import { Player, Team } from '../services/teamsHandler/TeamsHandlerInterface';
 import React from 'react';
 
 interface PlayerCardProps {

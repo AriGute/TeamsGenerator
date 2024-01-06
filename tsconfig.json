@@ -2,11 +2,9 @@
 	"compilerOptions": {
 		"experimentalDecorators": true,
 		"isolatedModules": true,
-
 		"jsx": "react",
 		/* Specify ECMAScript target version */
 		"target": "es2021",
-
 		/* Specify module code generation */
 		"module": "esnext",
 		/* Specify library files to be included in the compilation. */

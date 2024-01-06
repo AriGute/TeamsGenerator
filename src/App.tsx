@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider, Outlet, Link } from 'react-router-dom';
-import TeamGenerator from './components/TeamGeneratorPage/TeamsDisplay/TeamGenerator';
+import TeamGeneratorDashBoard from './components/TeamGeneratorPage/TeamsDisplay/TeamGeneratorDashBoard';
 import About from './components/AboutPage/About';
 import Header from './components/Header';
 import React from 'react';
@@ -30,7 +30,7 @@ const appRouter = createBrowserRouter([
 		children: [
 			{
 				path: '/',
-				element: <TeamGenerator />,
+				element: <TeamGeneratorDashBoard />,
 			},
 			{
 				path: '/about',

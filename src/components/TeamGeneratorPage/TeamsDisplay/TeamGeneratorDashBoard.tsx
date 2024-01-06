@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
-import ImportPlayerList from '../ImportPlayerList';
-import TeamCompCard from '../common/TeamCompCard';
-import TeamsDisplay from './TeamsDisplay';
+import ImportPlayerList from './ImportPlayerList';
+import TeamCompCard from './TeamCompCard';
+import PreTeamsDisplay from './PreTeamsDisplay';
 import TeamsHandler from '../services/teamsHandler/TeamsHandler';
 import { DisplayContext } from '../services/Context';
 import {
@@ -10,7 +10,7 @@ import {
 	Players,
 } from '../services/teamsHandler/TeamsHandlerInterface.js';
 
-const TeamGenerator = () => {
+const TeamGeneratorDashBoard = () => {
 	const [players, setPlayerList] = useState<Players>([]);
 	const displayContext = useContext(DisplayContext);
 
@@ -50,13 +50,13 @@ const TeamGenerator = () => {
 				<ImportPlayerList onImportPlayerList={onImportPlayerList} />
 				<TeamCompCard
 					Players={players}
-					teamName={ConstTeamsIndex.publicGroup}
+					teamIndex={ConstTeamsIndex.publicGroup}
 					onRemovePlayer={onRemovePlayer}
 				/>
-				<TeamsDisplay players={players} />
+				<PreTeamsDisplay players={players} />
 			</DisplayContext.Provider>
 		</div>
 	);
 };
 
-export default TeamGenerator;
+export default TeamGeneratorDashBoard;

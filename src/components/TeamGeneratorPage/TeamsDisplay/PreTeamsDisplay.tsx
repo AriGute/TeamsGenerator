@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import TeamCompCard from '../common/TeamCompCard';
+import TeamCompCard from './TeamCompCard';
 import TeamsHandler from '../services/teamsHandler/TeamsHandler';
 import AddRemoveTeam from './AddRemoveTeam';
 import { DisplayContext } from '../services/Context';
@@ -9,7 +9,7 @@ interface TeamsDisplayProps {
 	players?: Players;
 }
 
-const TeamsDisplay = ({ players }: TeamsDisplayProps) => {
+const PreTeamsDisplay = ({ players }: TeamsDisplayProps) => {
 	const [preTeams, setPreTeams] = useState<Teams>([]);
 	const displayContext = useContext(DisplayContext);
 
@@ -28,7 +28,8 @@ const TeamsDisplay = ({ players }: TeamsDisplayProps) => {
 	};
 
 	const onUpdateDisplay = (): void => {
-		setPreTeams([...TeamsHandler.getPreTeams()]);
+		const preTeams = TeamsHandler.getPreTeams();
+		setPreTeams([...preTeams]);
 	};
 
 	useEffect((): void => {
@@ -44,7 +45,10 @@ const TeamsDisplay = ({ players }: TeamsDisplayProps) => {
 					<p className=' text-red-500 m-5'>There is 0 teams</p>
 				) : (
 					preTeams.map((preTeam, i) => {
-						return <TeamCompCard Players={[...preTeam]} teamName={i} key={i} />;
+						const realTeamIndex = i + 1;
+						return (
+							<TeamCompCard Players={[...preTeam]} teamIndex={realTeamIndex} key={realTeamIndex} />
+						);
 					})
 				)}
 			</div>
@@ -64,4 +68,4 @@ const TeamsDisplay = ({ players }: TeamsDisplayProps) => {
 	);
 };
 
-export default TeamsDisplay;
+export default PreTeamsDisplay;
