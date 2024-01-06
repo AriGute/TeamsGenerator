@@ -19,6 +19,7 @@ const AddRemoveTeam = ({ setPreTeams }: AddRemoveTeamProps) => {
 		setPreTeams([...TeamsHandler.getPreTeams()]);
 		displayContext.toUpdate.forEach((updateFunction: Function) => updateFunction());
 	};
+
 	return (
 		<div className=' flex flex-row'>
 			<button

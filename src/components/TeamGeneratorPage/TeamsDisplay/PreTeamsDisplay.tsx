@@ -3,13 +3,9 @@ import TeamCompCard from './TeamCompCard';
 import TeamsHandler from '../services/teamsHandler/TeamsHandler';
 import AddRemoveTeam from './AddRemoveTeam';
 import { DisplayContext } from '../services/Context';
-import { Players, Teams } from '../services/teamsHandler/TeamsHandlerInterface';
+import { Team, Teams } from '../services/teamsHandler/TeamsHandlerInterface';
 
-interface TeamsDisplayProps {
-	players?: Players;
-}
-
-const PreTeamsDisplay = ({ players }: TeamsDisplayProps) => {
+const PreTeamsDisplay = () => {
 	const [preTeams, setPreTeams] = useState<Teams>([]);
 	const displayContext = useContext(DisplayContext);
 
@@ -20,7 +16,7 @@ const PreTeamsDisplay = ({ players }: TeamsDisplayProps) => {
 
 	const clearButton = (): void => {
 		TeamsHandler.clearTeams();
-		displayContext.toClear.forEach((f) => f());
+		displayContext.toClear.forEach((clearFunction: Function) => clearFunction());
 	};
 
 	const onClear = (): void => {
@@ -44,7 +40,7 @@ const PreTeamsDisplay = ({ players }: TeamsDisplayProps) => {
 				{preTeams.length === 0 ? (
 					<p className=' text-red-500 m-5'>There is 0 teams</p>
 				) : (
-					preTeams.map((preTeam, i) => {
+					preTeams.map((preTeam: Team, i) => {
 						const realTeamIndex = i + 1;
 						return (
 							<TeamCompCard Players={[...preTeam]} teamIndex={realTeamIndex} key={realTeamIndex} />

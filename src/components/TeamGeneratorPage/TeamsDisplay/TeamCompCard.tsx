@@ -44,7 +44,8 @@ const TeamCompCard = ({ Players, teamIndex, onRemovePlayer }: TeamCompCardProps)
 								key={player + i}
 								player={player}
 								teamName={teamIndex}
-								onRemovePlayer={onRemovePlayer}></PlayerCard>
+								onRemovePlayer={onRemovePlayer}
+							/>
 						);
 					})}
 				</ul>

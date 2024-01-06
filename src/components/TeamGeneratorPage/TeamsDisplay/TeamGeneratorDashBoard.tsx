@@ -53,7 +53,7 @@ const TeamGeneratorDashBoard = () => {
 					teamIndex={ConstTeamsIndex.publicGroup}
 					onRemovePlayer={onRemovePlayer}
 				/>
-				<PreTeamsDisplay players={players} />
+				<PreTeamsDisplay />
 			</DisplayContext.Provider>
 		</div>
 	);

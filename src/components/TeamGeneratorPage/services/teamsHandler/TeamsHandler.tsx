@@ -9,29 +9,27 @@ import {
 } from './TeamsHandlerInterface';
 import TeamsHandlerStorage from './TeamsHandlerStorage';
 
-//TODO fix bug move player from one group into another
 export default class TeamsHandler {
-	// static #publicGroup: Team = new Set([]);
-	static #preTeams: Teams = [new Set()];
-	static #MIN_TEAMS = 1;
-	static #MAX_TEAMS = 11;
+	private static preTeams: Teams = [new Set()];
+	private static MIN_TEAMS: number = 1;
+	private static MAX_TEAMS: number = 11;
 
-	static #initTeamsHandler(preTeams: Teams): void {
-		TeamsHandler.#preTeams = preTeams;
+	static initTeamsHandler(preTeams: Teams): void {
+		TeamsHandler.preTeams = preTeams;
 	}
 
 	static restoreTeamsHandler(): void {
 		const { restoredPreTeams }: StorageGetterResults = TeamsHandlerStorage.get();
-		TeamsHandler.#initTeamsHandler(/*restoredPublicGroup,*/ restoredPreTeams);
+		TeamsHandler.initTeamsHandler(restoredPreTeams);
 	}
 
 	/**
 	 * @returns new team
 	 */
 	static addTeam(): Team | null {
-		if (this.#preTeams.length === this.#MAX_TEAMS) return null;
+		if (this.preTeams.length === this.MAX_TEAMS) return null;
 		let team = new Set([]);
-		this.#preTeams.push(team);
+		this.preTeams.push(team);
 		TeamsHandlerStorage.set();
 		return team;
 	}
@@ -41,35 +39,35 @@ export default class TeamsHandler {
 	 * @returns the removed team
 	 */
 	static removeTeam(): Team | null {
-		if (this.#preTeams.length === this.#MIN_TEAMS) return null;
-		let team: Team | null = this.#preTeams.pop() || null;
+		if (this.preTeams.length === this.MIN_TEAMS) return null;
+		let team: Team | null = this.preTeams.pop() || null;
 		if (team && team.size) TeamsHandler.addPlayers([...team]);
 		TeamsHandlerStorage.set();
 		return team;
 	}
 
 	static getPreTeams(): Teams {
-		const preTeams = [...TeamsHandler.#preTeams];
+		const preTeams = [...TeamsHandler.preTeams];
 		preTeams.splice(ConstTeamsIndex.publicGroup, 1);
 		return preTeams;
 	}
 
 	static getPublicGroup(): Player[] {
-		const publicGroup = TeamsHandler.#preTeams[ConstTeamsIndex.publicGroup];
+		const publicGroup = TeamsHandler.preTeams[ConstTeamsIndex.publicGroup];
 		if (publicGroup) return [...publicGroup];
 		return [];
 	}
 
 	static getAllPlayers(): Player[] {
-		const tempPlayers: Player[] = [...TeamsHandler.#preTeams[ConstTeamsIndex.publicGroup]];
-		TeamsHandler.#preTeams.forEach((team: Team) => tempPlayers.concat([...team]));
+		const tempPlayers: Player[] = [...TeamsHandler.preTeams[ConstTeamsIndex.publicGroup]];
+		TeamsHandler.preTeams.forEach((team: Team) => tempPlayers.concat([...team]));
 		return tempPlayers;
 	}
 
 	static addPlayers(players: Player[]): void {
 		players.forEach((player: Player) => {
-			if (!TeamsHandler.#hasPlayer(player)) {
-				TeamsHandler.#preTeams[ConstTeamsIndex.publicGroup].add(player);
+			if (!TeamsHandler.hasPlayer(player)) {
+				TeamsHandler.preTeams[ConstTeamsIndex.publicGroup].add(player);
 			}
 		});
 		TeamsHandlerStorage.set();
@@ -78,10 +76,10 @@ export default class TeamsHandler {
 	static addPlayerToPreTeam(player: Player, moveToTeam: number): void {
 		switch (moveToTeam) {
 			case ConstTeamsIndex.publicGroup:
-				TeamsHandler.#preTeams[ConstTeamsIndex.publicGroup].add(player);
+				TeamsHandler.preTeams[ConstTeamsIndex.publicGroup].add(player);
 				break;
 			default:
-				TeamsHandler.#preTeams[moveToTeam].add(player);
+				TeamsHandler.preTeams[moveToTeam].add(player);
 				break;
 		}
 		TeamsHandlerStorage.set();
@@ -90,10 +88,10 @@ export default class TeamsHandler {
 	static removePlayerFromTeam(player: Player, currentTeamIndex: number): void {
 		switch (currentTeamIndex) {
 			case ConstTeamsIndex.publicGroup:
-				TeamsHandler.#preTeams[ConstTeamsIndex.publicGroup].delete(player);
+				TeamsHandler.preTeams[ConstTeamsIndex.publicGroup].delete(player);
 				break;
 			default:
-				TeamsHandler.#preTeams[currentTeamIndex].delete(player);
+				TeamsHandler.preTeams[currentTeamIndex].delete(player);
 				break;
 		}
 
@@ -101,8 +99,8 @@ export default class TeamsHandler {
 	}
 
 	static clearTeams(): void {
-		TeamsHandler.#preTeams[ConstTeamsIndex.publicGroup].clear();
-		TeamsHandler.#preTeams = [new Set()];
+		TeamsHandler.preTeams[ConstTeamsIndex.publicGroup].clear();
+		TeamsHandler.preTeams = [new Set()];
 		TeamsHandlerStorage.set();
 	}
 
@@ -111,12 +109,12 @@ export default class TeamsHandler {
 	 */
 	static getRandomTeams(): Teams {
 		let toSortTeams: SortedTeams = [];
-		if (TeamsHandler.#preTeams.length <= 1) return [];
+		if (TeamsHandler.preTeams.length <= 1) return [];
 
 		this.getPreTeams().forEach((team, i) => toSortTeams.push([new Set([...team]), i]));
 		toSortTeams.sort((a, b) => (a[0] < b[0] ? -1 : 1));
 
-		let publicGroup: Players = [...TeamsHandler.#preTeams[ConstTeamsIndex.publicGroup]];
+		let publicGroup: Players = [...TeamsHandler.preTeams[ConstTeamsIndex.publicGroup]];
 		let rand: number;
 		let pick: Player;
 		let index: number;
@@ -146,7 +144,7 @@ export default class TeamsHandler {
 	}
 
 	// check if player exist in any team
-	static #hasPlayer(player: Player): boolean {
+	static hasPlayer(player: Player): boolean {
 		if (TeamsHandler.getAllPlayers()?.includes(player)) return true;
 		if (TeamsHandler.getPreTeams()?.some((team: Team) => team.has(player))) return true;
 		return false;
