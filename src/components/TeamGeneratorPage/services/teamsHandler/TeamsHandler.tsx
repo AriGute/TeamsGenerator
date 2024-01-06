@@ -23,9 +23,6 @@ export default class TeamsHandler {
 		TeamsHandler.initTeamsHandler(restoredPreTeams);
 	}
 
-	/**
-	 * @returns new team
-	 */
 	static addTeam(): Team | null {
 		if (this.preTeams.length === this.MAX_TEAMS) return null;
 		let team = new Set([]);
@@ -34,10 +31,6 @@ export default class TeamsHandler {
 		return team;
 	}
 
-	/**
-	 * @param {number} index of the team that need to be remove
-	 * @returns the removed team
-	 */
 	static removeTeam(): Team | null {
 		if (this.preTeams.length === this.MIN_TEAMS) return null;
 		let team: Team | null = this.preTeams.pop() || null;
@@ -104,9 +97,6 @@ export default class TeamsHandler {
 		TeamsHandlerStorage.set();
 	}
 
-	/**
-	 * @returns {Array<Set>}
-	 */
 	static getRandomTeams(): Teams {
 		let toSortTeams: SortedTeams = [];
 		if (TeamsHandler.preTeams.length <= 1) return [];
