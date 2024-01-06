@@ -4,8 +4,9 @@ import {
 	Team,
 	Player,
 	ConstTeamsIndex,
-	SortedTeams,
+	ToOptimizeTeams,
 	Players,
+	ToOptimizeTeam,
 } from './TeamsHandlerInterface';
 import TeamsHandlerStorage from './TeamsHandlerStorage';
 
@@ -98,39 +99,43 @@ export default class TeamsHandler {
 	}
 
 	static getRandomTeams(): Teams {
-		let toSortTeams: SortedTeams = [];
 		if (TeamsHandler.preTeams.length <= 1) return [];
-
-		this.getPreTeams().forEach((team, i) => toSortTeams.push([new Set([...team]), i]));
-		toSortTeams.sort((a, b) => (a[0] < b[0] ? -1 : 1));
-
 		let publicGroup: Players = [...TeamsHandler.preTeams[ConstTeamsIndex.publicGroup]];
-		let rand: number;
-		let pick: Player;
-		let index: number;
+		let team: Team;
 		const size: number = publicGroup.length;
 
+		const beforeOptimizePreTeamsList: ToOptimizeTeams = this.getPreTeams().map((team, i) => [
+			new Set([...team]),
+			i,
+		]);
+		const optimizedPreTeamsList = beforeOptimizePreTeamsList.toSorted((a, b) =>
+			a[0].size < b[0].size ? -1 : 1,
+		);
+
 		for (let i = 0; i < size; i++) {
-			rand = Math.round(Math.random() * (publicGroup.length - 1));
-			pick = publicGroup[rand];
-			index = 0;
-
-			if (toSortTeams[index + 1]) {
-				while (toSortTeams[index][0].size >= toSortTeams[index + 1][0].size) {
-					index++;
-					if (!toSortTeams[index + 1]) break;
-				}
-			}
-
-			toSortTeams[index][0].add(pick);
-			if (index === toSortTeams.length - 1) index = 0;
-			publicGroup.splice(rand, 1);
+			team = this.#pickTeam(optimizedPreTeamsList)[0];
+			team.add(this.#pickRandomPlayer(publicGroup));
 		}
 
-		toSortTeams.sort((a, b) => (a[1] < b[1] ? -1 : 1));
-		const sortedTeams: Teams = toSortTeams.map((team) => team[0]);
+		const deOptimizePreTeamList = optimizedPreTeamsList.toSorted((a, b) => (a[1] < b[1] ? -1 : 1));
+		const randomTeams: Teams = deOptimizePreTeamList.map((team) => team[0]);
+		return randomTeams;
+	}
 
-		return sortedTeams;
+	static #pickRandomPlayer(publicGroup: Players): Player {
+		const randomNumber = Math.round(Math.random() * (publicGroup.length - 1));
+		return publicGroup.splice(randomNumber, 1)[0];
+	}
+
+	static #pickTeam(beforeSortTeams: ToOptimizeTeams): ToOptimizeTeam {
+		let index: number = 0;
+		if (beforeSortTeams[index + 1]) {
+			while (beforeSortTeams[index][0].size >= beforeSortTeams[index + 1][0].size) {
+				index++;
+				if (!beforeSortTeams[index + 1]) return beforeSortTeams[index];
+			}
+		}
+		return beforeSortTeams[index];
 	}
 
 	// check if player exist in any team

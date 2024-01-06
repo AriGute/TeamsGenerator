@@ -5,8 +5,9 @@ export enum ConstTeamsIndex {
 export type Player = string;
 export type Players = string[];
 
-export type SortedTeams = Array<[Team, SortIndex]>;
-export type SortIndex = number;
+export type ToOptimizeTeams = Array<ToOptimizeTeam>;
+export type ToOptimizeTeam = [Team, ToOptimizeIndex];
+export type ToOptimizeIndex = number;
 
 export type Teams = Team[];
 export type Team = Set<string>;
