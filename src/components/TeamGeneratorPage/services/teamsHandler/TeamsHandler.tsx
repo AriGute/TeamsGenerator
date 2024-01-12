@@ -26,7 +26,7 @@ export default class TeamsHandler {
 
 	static addTeam(): Team | null {
 		if (this.preTeams.length === this.MAX_TEAMS) return null;
-		let team = new Set([]);
+		const team = new Set([]);
 		this.preTeams.push(team);
 		TeamsHandlerStorage.set();
 		return team;
@@ -35,7 +35,7 @@ export default class TeamsHandler {
 	static removeTeam(): Team | null {
 		if (this.preTeams.length === this.MIN_TEAMS) return null;
 		let team: Team | null = this.preTeams.pop() || null;
-		if (team && team.size) TeamsHandler.addPlayers([...team]);
+		if (team?.size) TeamsHandler.addPlayers([...team]);
 		TeamsHandlerStorage.set();
 		return team;
 	}

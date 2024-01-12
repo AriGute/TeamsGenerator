@@ -9,12 +9,12 @@ interface AddRemoveTeamProps {
 const AddRemoveTeam = ({ setPreTeams }: AddRemoveTeamProps) => {
 	const displayContext = useContext(DisplayContext);
 
-	const addTeam = () => {
+	const addTeam = (): void => {
 		TeamsHandler.addTeam();
 		setPreTeams([...TeamsHandler.getPreTeams()]);
 	};
 
-	const removeTeam = () => {
+	const removeTeam = (): void => {
 		TeamsHandler.removeTeam();
 		setPreTeams([...TeamsHandler.getPreTeams()]);
 		displayContext.toUpdate.forEach((updateFunction: Function) => updateFunction());

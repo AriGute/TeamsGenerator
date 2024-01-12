@@ -49,7 +49,7 @@ const TeamGeneratorDashBoard = () => {
 			<DisplayContext.Provider value={displayContext}>
 				<ImportPlayerList onImportPlayerList={onImportPlayerList} />
 				<TeamCompCard
-					Players={players}
+					players={players}
 					teamIndex={ConstTeamsIndex.publicGroup}
 					onRemovePlayer={onRemovePlayer}
 				/>

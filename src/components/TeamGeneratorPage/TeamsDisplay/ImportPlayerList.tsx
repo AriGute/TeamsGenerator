@@ -20,7 +20,7 @@ const ImportPlayerList = ({ onImportPlayerList }: ImportPlayerListProps) => {
 		setPlayerList('');
 	};
 
-	useEffect((): void => {
+	useEffect(() => {
 		displayContext.toClear.push(onClear);
 	}, []);
 

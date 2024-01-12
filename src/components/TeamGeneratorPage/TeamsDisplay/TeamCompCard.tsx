@@ -5,13 +5,13 @@ import { DisplayContext } from '../services/Context';
 import { ConstTeamsIndex, Player, Players } from '../services/teamsHandler/TeamsHandlerInterface';
 
 interface TeamCompCardProps {
-	Players: Players;
+	players: Players;
 	teamIndex: number;
 	onRemovePlayer?: Function;
 }
 
-const TeamCompCard = ({ Players, teamIndex, onRemovePlayer }: TeamCompCardProps) => {
-	let teamList = Players && [...Players];
+const TeamCompCard = ({ players, teamIndex, onRemovePlayer }: TeamCompCardProps) => {
+	const teamList = players && [...players];
 	const displayContext = useContext(DisplayContext);
 
 	const teamName: string = (

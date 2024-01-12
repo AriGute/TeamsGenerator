@@ -28,7 +28,7 @@ const PreTeamsDisplay = () => {
 		setPreTeams([...preTeams]);
 	};
 
-	useEffect((): void => {
+	useEffect(() => {
 		displayContext.toClear.push(onClear);
 		displayContext.toUpdate.push(onUpdateDisplay);
 	}, []);
@@ -43,7 +43,7 @@ const PreTeamsDisplay = () => {
 					preTeams.map((preTeam: Team, i) => {
 						const realTeamIndex = i + 1;
 						return (
-							<TeamCompCard Players={[...preTeam]} teamIndex={realTeamIndex} key={realTeamIndex} />
+							<TeamCompCard players={[...preTeam]} teamIndex={realTeamIndex} key={realTeamIndex} />
 						);
 					})
 				)}

@@ -1,4 +1,4 @@
-import { Player, Team } from '../services/teamsHandler/TeamsHandlerInterface';
+import { Player } from '../services/teamsHandler/TeamsHandlerInterface';
 import React from 'react';
 
 interface PlayerCardProps {
@@ -7,9 +7,9 @@ interface PlayerCardProps {
 	onRemovePlayer?: Function;
 }
 
-const playerCard = ({ player, teamName, onRemovePlayer }: PlayerCardProps) => {
+const PlayerCard = ({ player, teamName, onRemovePlayer }: PlayerCardProps) => {
 	const drag = (dragEvent: React.DragEvent) => {
-		if (dragEvent && dragEvent.dataTransfer) {
+		if (dragEvent?.dataTransfer) {
 			dragEvent.dataTransfer.setData('player', player);
 			dragEvent.dataTransfer.setData('team', teamName.toString());
 		}
@@ -25,4 +25,4 @@ const playerCard = ({ player, teamName, onRemovePlayer }: PlayerCardProps) => {
 	);
 };
 
-export default playerCard;
+export default PlayerCard;
