@@ -2,19 +2,24 @@ import React, { useContext } from 'react';
 import TeamsHandler from '../services/teamsHandler/TeamsHandler';
 import { DisplayContext } from '../services/Context';
 
-const AddRemoveTeam = ({ setPreTeams }) => {
+interface AddRemoveTeamProps {
+	setPreTeams: Function;
+}
+
+const AddRemoveTeam = ({ setPreTeams }: AddRemoveTeamProps) => {
 	const displayContext = useContext(DisplayContext);
 
-	const addTeam = () => {
+	const addTeam = (): void => {
 		TeamsHandler.addTeam();
 		setPreTeams([...TeamsHandler.getPreTeams()]);
 	};
 
-	const removeTeam = () => {
+	const removeTeam = (): void => {
 		TeamsHandler.removeTeam();
 		setPreTeams([...TeamsHandler.getPreTeams()]);
-		displayContext.toUpdate.forEach((f) => f());
+		displayContext.toUpdate.forEach((updateFunction: Function) => updateFunction());
 	};
+
 	return (
 		<div className=' flex flex-row'>
 			<button

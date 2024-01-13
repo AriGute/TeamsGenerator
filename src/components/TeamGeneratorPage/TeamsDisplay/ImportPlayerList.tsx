@@ -1,18 +1,22 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { DisplayContext } from './services/Context';
+import { DisplayContext } from '../services/Context';
 
-const ImportPlayerList = ({ onImportPlayerList }) => {
-	const [playerList, setPlayerList] = useState('');
+interface ImportPlayerListProps {
+	onImportPlayerList: Function;
+}
+
+const ImportPlayerList = ({ onImportPlayerList }: ImportPlayerListProps) => {
+	const [playerList, setPlayerList] = useState<string>('');
 	const displayContext = useContext(DisplayContext);
 
-	const addPlayerButton = () => {
+	const addPlayerButton = (): void => {
 		let list = playerList
 			.split('\n')
 			.filter((p) => p != '' && /[a-zA-Z]/.test(p))
 			.map((p) => p.trim());
 		onImportPlayerList(list);
 	};
-	const onClear = () => {
+	const onClear = (): void => {
 		setPlayerList('');
 	};
 
@@ -28,8 +32,8 @@ const ImportPlayerList = ({ onImportPlayerList }) => {
 					className=' bg-gray-100 w-[300px] rounded'
 					name=''
 					id='playersToImport'
-					cols='30'
-					rows='5'
+					cols={30}
+					rows={5}
 					value={playerList.toString().replaceAll(',', '\n')}
 					onChange={(e) => setPlayerList(e.target.value)}
 				/>

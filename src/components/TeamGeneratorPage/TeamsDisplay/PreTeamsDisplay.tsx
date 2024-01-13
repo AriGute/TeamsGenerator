@@ -1,29 +1,31 @@
 import React, { useState, useEffect, useContext } from 'react';
-import TeamCompCard from '../common/TeamCompCard';
+import TeamCompCard from './TeamCompCard';
 import TeamsHandler from '../services/teamsHandler/TeamsHandler';
 import AddRemoveTeam from './AddRemoveTeam';
 import { DisplayContext } from '../services/Context';
+import { Team, Teams } from '../services/teamsHandler/TeamsHandlerInterface';
 
-const TeamsDisplay = ({ playerList }) => {
-	const [preTeams, setPreTeams] = useState([]);
+const PreTeamsDisplay = () => {
+	const [preTeams, setPreTeams] = useState<Teams>([]);
 	const displayContext = useContext(DisplayContext);
 
-	const generateTeamsButton = () => {
-		const teams = TeamsHandler.getRandomTeams();
+	const generateTeamsButton = (): void => {
+		const teams: Teams = TeamsHandler.getRandomTeams();
 		setPreTeams([...teams]);
 	};
 
-	const clearButton = () => {
+	const clearButton = (): void => {
 		TeamsHandler.clearTeams();
-		displayContext.toClear.forEach((f) => f());
+		displayContext.toClear.forEach((clearFunction: Function) => clearFunction());
 	};
 
-	const onClear = () => {
+	const onClear = (): void => {
 		setPreTeams([]);
 	};
 
-	const onUpdateDisplay = () => {
-		setPreTeams([...TeamsHandler.getPreTeams()]);
+	const onUpdateDisplay = (): void => {
+		const preTeams = TeamsHandler.getPreTeams();
+		setPreTeams([...preTeams]);
 	};
 
 	useEffect(() => {
@@ -38,8 +40,11 @@ const TeamsDisplay = ({ playerList }) => {
 				{preTeams.length === 0 ? (
 					<p className=' text-red-500 m-5'>There is 0 teams</p>
 				) : (
-					preTeams.map((preTeam, i) => {
-						return <TeamCompCard teamSet={preTeam} name={i} key={i} />;
+					preTeams.map((preTeam: Team, i) => {
+						const realTeamIndex = i + 1;
+						return (
+							<TeamCompCard players={[...preTeam]} teamIndex={realTeamIndex} key={realTeamIndex} />
+						);
 					})
 				)}
 			</div>
@@ -59,4 +64,4 @@ const TeamsDisplay = ({ playerList }) => {
 	);
 };
 
-export default TeamsDisplay;
+export default PreTeamsDisplay;
