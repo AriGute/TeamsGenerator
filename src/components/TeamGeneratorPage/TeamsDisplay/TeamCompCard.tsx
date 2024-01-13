@@ -26,7 +26,7 @@ const TeamCompCard = ({ players, teamIndex, onRemovePlayer }: TeamCompCardProps)
 		dragEvent.preventDefault();
 		const player = dragEvent.dataTransfer.getData('player');
 		const currentTeam: string = dragEvent.dataTransfer.getData('team');
-		const moveToTeam: string = teamName;
+		const moveToTeam: string = teamIndex.toString();
 		TeamsHandler.removePlayerFromTeam(player, parseInt(currentTeam));
 		TeamsHandler.addPlayerToPreTeam(player, parseInt(moveToTeam));
 		displayContext.toUpdate.forEach((updateFunction: Function) => updateFunction());
