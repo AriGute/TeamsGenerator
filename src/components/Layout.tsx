@@ -5,7 +5,7 @@ import React from 'react';
 
 const Layout = () => {
 	return (
-		<div className='   w-screen min-h-full bg-blue-100 absolute top-0'>
+		<div className=' w-screen min-h-full bg-blue-100 absolute top-0'>
 			<Header />
 			<Outlet />
 			<div className='text-center'>

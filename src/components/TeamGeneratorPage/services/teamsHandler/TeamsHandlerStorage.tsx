@@ -5,7 +5,7 @@ export default class TeamsHandlerStorage {
 	static get(): StorageGetterResults {
 		const data: string | null = localStorage.getItem('player_list') || null;
 		if (!data) {
-			const publicGroup: Team = new Set();
+			const publicGroup: Team = TeamsHandler.createTeam();
 			return {
 				restoredPreTeams: [publicGroup],
 			};
@@ -15,9 +15,9 @@ export default class TeamsHandlerStorage {
 		const { preTeams } = payload;
 		const restoredPreTeams: Teams = [];
 
-		preTeams.forEach((team: string) => {
-			let tempTeam: Team = new Set([]);
-			[...team].forEach((player: string) => tempTeam.add(player));
+		preTeams.forEach((team: Team) => {
+			let tempTeam: Team = TeamsHandler.createTeam();
+			[...team.players].forEach((player: string) => tempTeam.players.add(player));
 			restoredPreTeams.push(tempTeam);
 		});
 
@@ -29,7 +29,9 @@ export default class TeamsHandlerStorage {
 		const preTeams = TeamsHandler.getPreTeams();
 		const toStoreData = [publicGroup, ...preTeams];
 		const payload = {
-			preTeams: toStoreData.map((team) => [...team]),
+			preTeams: toStoreData.map((team: Team) => {
+				return { id: team.id, players: [...team.players] };
+			}),
 		};
 		localStorage.setItem('player_list', JSON.stringify(payload));
 	}

@@ -10,7 +10,7 @@ export type OptimizeTeam = [Team, OptimizeIndex];
 export type OptimizeIndex = number;
 
 export type Teams = Team[];
-export type Team = Set<string>;
+export type Team = { id: string; players: Set<string> };
 
 export interface StorageGetterResults {
 	restoredPreTeams: Teams;

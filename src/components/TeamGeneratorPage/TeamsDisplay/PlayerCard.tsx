@@ -19,7 +19,7 @@ const PlayerCard = ({ player, teamName, onRemovePlayer }: PlayerCardProps) => {
 		<li
 			draggable='true'
 			onDragStart={drag}
-			className='border bg-gray-300 flex justify-between px-3 rounded'>
+			className='transition transition-all  border bg-gray-300 flex justify-between px-3 rounded  hover:py-1 hover:bg-gray-400'>
 			{player} {onRemovePlayer && <button onClick={() => onRemovePlayer(player)}>x</button>}
 		</li>
 	);
