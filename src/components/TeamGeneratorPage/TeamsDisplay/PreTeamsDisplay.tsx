@@ -34,7 +34,7 @@ const PreTeamsDisplay = () => {
 	}, []);
 
 	return (
-		<div className=' h-[300px] flex flex-col items-center my-4'>
+		<div className='  flex flex-col items-center my-4'>
 			<AddTeam setPreTeams={setPreTeams} />
 			<div className='flex items-center justify-center flex-wrap'>
 				{preTeams.length === 0 ? (
