@@ -3,11 +3,11 @@ import PlayerCard from './PlayerCard';
 import TeamsHandler from '../services/teamsHandler/TeamsHandler';
 import { DisplayContext } from '../services/Context';
 import { ConstTeamsIndex, Player, Players } from '../services/teamsHandler/TeamsHandlerInterface';
-import './TeamCompCard.css';
+
 interface TeamCompCardProps {
 	players: Players;
 	teamIndex: number;
-	onRemovePlayer?: Function;
+	onRemovePlayer?: (player: Player) => void;
 }
 
 const TeamCompCard = ({ players, teamIndex, onRemovePlayer }: TeamCompCardProps) => {
@@ -24,10 +24,8 @@ const TeamCompCard = ({ players, teamIndex, onRemovePlayer }: TeamCompCardProps)
 
 	const removeTeam = (): void => {
 		setDestroy(true);
-		setTimeout(() => {
-			TeamsHandler.removeTeam(teamIndex);
-			displayContext.toUpdate.forEach((updateFunction: Function) => updateFunction());
-		}, 500);
+		TeamsHandler.removeTeam(teamIndex);
+		displayContext.toUpdate.forEach((updateFunction: Function) => updateFunction());
 	};
 
 	const drop = (dragEvent: React.DragEvent) => {
@@ -46,33 +44,30 @@ const TeamCompCard = ({ players, teamIndex, onRemovePlayer }: TeamCompCardProps)
 				<h1 className=' underline'>{`team: ` + teamName + ` [${teamList.length}]`}</h1>
 				{teamIndex !== ConstTeamsIndex.publicGroup && (
 					<button
-						className={` transition ease-in-out mx-2 h-8 w-8 bg-red-300 hover:bg-red-400 rounded-full`}
+						className=' transition ease-in-out mx-2 h-8 w-8 bg-red-300 hover:bg-red-400 rounded-full'
 						onClick={removeTeam}>
 						-
 					</button>
 				)}
 			</div>
-			{destroy ? (
-				<div className=' w-[0px] min-h-[150px] max-h-[200px] bg-slate-100 rounded overflow-y-auto TeamCompCardDisAppear'></div>
-			) : (
-				<div
-					className=' w-[300px] min-h-[150px] max-h-[200px] bg-slate-100 rounded overflow-y-auto TeamCompCardAppear'
-					onDrop={drop}
-					onDragOver={allowDrop}>
-					<ul>
-						{teamList.map((player: Player, i: number) => {
-							return (
-								<PlayerCard
-									key={player + i}
-									player={player}
-									teamName={teamIndex}
-									onRemovePlayer={onRemovePlayer}
-								/>
-							);
-						})}
-					</ul>
-				</div>
-			)}
+
+			<div
+				className=' w-[300px] min-h-[150px] max-h-[200px] bg-slate-100 rounded overflow-y-auto TeamCompCardAppear'
+				onDrop={drop}
+				onDragOver={allowDrop}>
+				<ul>
+					{teamList.map((player: Player, i: number) => {
+						return (
+							<PlayerCard
+								key={player + i}
+								player={player}
+								teamName={teamIndex}
+								onRemovePlayer={onRemovePlayer}
+							/>
+						);
+					})}
+				</ul>
+			</div>
 		</div>
 	);
 };
