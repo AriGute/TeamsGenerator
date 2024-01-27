@@ -1,14 +1,11 @@
 import React, { useContext } from 'react';
 import TeamsHandler from '../services/teamsHandler/TeamsHandler';
-import { DisplayContext } from '../services/Context';
 
 interface AddRemoveTeamProps {
 	setPreTeams: Function;
 }
 
 const AddTeam = ({ setPreTeams }: AddRemoveTeamProps) => {
-	const displayContext = useContext(DisplayContext);
-
 	const addTeam = (): void => {
 		TeamsHandler.addTeam();
 		setPreTeams([...TeamsHandler.getPreTeams()]);

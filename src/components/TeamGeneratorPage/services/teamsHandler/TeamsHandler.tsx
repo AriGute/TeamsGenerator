@@ -13,7 +13,7 @@ import TeamsHandlerStorage from './TeamsHandlerStorage';
 
 export default class TeamsHandler {
 	private static preTeams: Teams = [TeamsHandler.createTeam()];
-	private static MIN_TEAMS: number = 1;
+	private static MIN_TEAMS: number = 1; // 0 is public group
 	private static MAX_TEAMS: number = 11;
 
 	static initTeamsHandler(preTeams: Teams): void {

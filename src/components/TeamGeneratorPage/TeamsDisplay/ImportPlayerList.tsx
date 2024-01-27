@@ -38,7 +38,7 @@ const ImportPlayerList = ({ onImportPlayerList }: ImportPlayerListProps) => {
 					onChange={(e) => setPlayerList(e.target.value)}
 				/>
 				<button
-					className={`bg-gray-300 h-10 p-2 m-2 rounded w-[150px] hover:bg-gray-400`}
+					className={` transition ease-in-out bg-gray-300 h-10 p-2 m-2 rounded w-[150px] hover:bg-gray-400`}
 					onClick={addPlayerButton}>
 					Add Players
 				</button>
