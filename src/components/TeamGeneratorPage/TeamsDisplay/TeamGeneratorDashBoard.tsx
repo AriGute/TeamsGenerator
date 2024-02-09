@@ -16,17 +16,17 @@ const TeamGeneratorDashBoard = () => {
 
 	const onRemovePlayer = (player: Player): void => {
 		TeamsHandler.removePlayerFromTeam(player, ConstTeamsIndex.publicGroup);
-		setPlayerList(TeamsHandler.getPublicGroup());
+		setPlayerList([...TeamsHandler.getPublicGroup().players]);
 	};
 
 	const onImportPlayerList = (importPlayers: Player[]): void => {
 		TeamsHandler.addPlayers(importPlayers);
-		setPlayerList(TeamsHandler.getPublicGroup());
+		setPlayerList([...TeamsHandler.getPublicGroup().players]);
 	};
 
 	const loadPlayersFromStorage = (): void => {
 		TeamsHandler.restoreTeamsHandler();
-		setPlayerList(TeamsHandler.getPublicGroup());
+		setPlayerList([...TeamsHandler.getPublicGroup().players]);
 		displayContext.toUpdate.forEach((f) => f());
 	};
 
@@ -35,7 +35,7 @@ const TeamGeneratorDashBoard = () => {
 	};
 
 	const onUpdateDisplay = () => {
-		setPlayerList(TeamsHandler.getPublicGroup());
+		setPlayerList([...TeamsHandler.getPublicGroup().players]);
 	};
 
 	useEffect(() => {

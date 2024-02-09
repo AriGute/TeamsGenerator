@@ -1,0 +1,19 @@
+/* width */
+.TeamCompCardScroll::-webkit-scrollbar {
+	width: 10px;
+}
+
+/* Track */
+.TeamCompCardScroll::-webkit-scrollbar-track {
+	background: #dfdfdf;
+}
+
+/* Handle */
+.TeamCompCardScroll::-webkit-scrollbar-thumb {
+	background: #b4b4b4;
+}
+
+/* Handle on hover */
+.TeamCompCardScroll::-webkit-scrollbar-thumb:hover {
+	background: #9c9c9c;
+}

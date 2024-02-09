@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import TeamCompCard from './TeamCompCard';
 import TeamsHandler from '../services/teamsHandler/TeamsHandler';
-import AddRemoveTeam from './AddRemoveTeam';
+import AddTeam from './AddTeam';
 import { DisplayContext } from '../services/Context';
 import { Team, Teams } from '../services/teamsHandler/TeamsHandlerInterface';
 
@@ -34,8 +34,8 @@ const PreTeamsDisplay = () => {
 	}, []);
 
 	return (
-		<div className=' flex flex-col items-center my-4'>
-			<AddRemoveTeam setPreTeams={setPreTeams} />
+		<div className='  flex flex-col items-center my-4'>
+			<AddTeam setPreTeams={setPreTeams} />
 			<div className='flex items-center justify-center flex-wrap'>
 				{preTeams.length === 0 ? (
 					<p className=' text-red-500 m-5'>There is 0 teams</p>
@@ -43,19 +43,23 @@ const PreTeamsDisplay = () => {
 					preTeams.map((preTeam: Team, i) => {
 						const realTeamIndex = i + 1;
 						return (
-							<TeamCompCard players={[...preTeam]} teamIndex={realTeamIndex} key={realTeamIndex} />
+							<TeamCompCard
+								players={[...preTeam.players]}
+								teamIndex={realTeamIndex}
+								key={preTeam.id}
+							/>
 						);
 					})
 				)}
 			</div>
 			<div className='flex flex-col'>
 				<button
-					className={`bg-green-300 h-10 p-2 m-2 rounded w-[150px] hover:bg-green-400`}
+					className={` transition ease-in-out bg-green-300 h-10 p-2 m-2 rounded w-[150px] hover:bg-green-400`}
 					onClick={generateTeamsButton}>
 					Generate Teams
 				</button>
 				<button
-					className={`bg-red-300 h-10 p-2 m-2 rounded w-[150px] hover:bg-red-400`}
+					className={`transition ease-in-out bg-red-300 h-10 p-2 m-2 rounded w-[150px] hover:bg-red-400`}
 					onClick={clearButton}>
 					Clear
 				</button>
