@@ -39,10 +39,12 @@ const TeamCompCard = ({ players, teamIndex, onRemovePlayer }: TeamCompCardProps)
 	return (
 		<div className=' text-center m-1 '>
 			<div className=' flex justify-between items-center h-7 bg-gray-400 content-evenly'>
-				<h1 className=' mx-2 text-white'>{`Team: ` + teamName + ` [${teamList.length}]`}</h1>
+				<h1 className=' mx-2 text-white select-none'>
+					{`Team: ` + teamName + ` [${teamList.length}]`}
+				</h1>
 				{teamIndex !== ConstTeamsIndex.publicGroup && (
 					<button
-						className=' transition ease-in-out h-7 w-7 bg-gray-500 hover:bg-gray-600'
+						className=' transition ease-in-out h-7 w-7 bg-gray-500 hover:bg-gray-600 select-none'
 						onClick={removeTeam}>
 						x
 					</button>
@@ -50,7 +52,7 @@ const TeamCompCard = ({ players, teamIndex, onRemovePlayer }: TeamCompCardProps)
 			</div>
 
 			<div
-				className=' w-[400px] min-h-[150px] max-h-[200px] bg-slate-100 rounded overflow-y-auto TeamCompCardScroll'
+				className=' w-[400px] h-[150px] max-h-[150px] bg-slate-100 rounded overflow-y-auto TeamCompCardScroll'
 				onDrop={drop}
 				onDragOver={allowDrop}>
 				<ul>

@@ -25,11 +25,11 @@ const ImportPlayerList = ({ onImportPlayerList }: ImportPlayerListProps) => {
 	}, []);
 
 	return (
-		<div className=' text-center'>
-			<h1 className=' underline'>Import List</h1>
+		<div className=' text-center mb-5 bg-gray-500 '>
+			<h1 className=' mx-2 text-white select-none'>Import List</h1>
 			<div className='flex flex-col items-center'>
 				<textarea
-					className=' bg-gray-100 w-[300px] rounded'
+					className=' w-[400px] min-h-[150px]  bg-slate-100 rounded p-2 m-1 overflow-y-auto TeamCompCardScroll'
 					name=''
 					id='playersToImport'
 					cols={30}
